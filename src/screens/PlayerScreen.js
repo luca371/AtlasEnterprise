@@ -130,7 +130,6 @@ const PlayerScreen = () => {
     return () => unsub();
   }, [navigate, paramUid]);
 
-  const targetUid     = authUser ? (paramUid || authUser.uid) : null;
   const isOwnProfile  = authUser && (!paramUid || paramUid === authUser.uid);
   const displayData   = isOwnProfile ? userData : profileData;
   const displayName   = displayData
