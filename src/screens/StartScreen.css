@@ -688,9 +688,21 @@
 
   .sd-workout__btn { display: none; }
 }
-/* ─── ADAUGĂ ACESTE STILURI LA SFÂRȘITUL StartScreen.css ──────────────────────── */
+/* ─── ADAUGĂ LA SFÂRȘITUL StartScreen.css ────────────────────────────────── */
 
-/* Upgrade success banner */
+/* ── Avatar ca buton clickabil — fara gear icon ──────────────────────────── */
+.sd-avatar--clickable {
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.sd-avatar--clickable:hover {
+  opacity: 0.82;
+  transform: scale(1.06);
+}
+
+/* ── Upgrade success banner ──────────────────────────────────────────────── */
 .sd-upgrade-banner {
   position: fixed;
   top: 72px;
@@ -699,83 +711,29 @@
   background: #00D4AA;
   color: #000;
   font-family: 'DM Sans', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  padding: 12px 24px;
+  padding: 10px 22px;
   border-radius: 50px;
   display: flex;
   align-items: center;
   gap: 8px;
-  z-index: 200;
-  animation: sd-banner-in 0.3s ease;
-  box-shadow: 0 8px 32px rgba(0,212,170,0.3);
+  z-index: 300;
+  animation: sdBannerIn 0.3s ease;
+  box-shadow: 0 6px 24px rgba(0,212,170,0.3);
+  white-space: nowrap;
 }
 
-@keyframes sd-banner-in {
-  from { opacity: 0; transform: translate(-50%, -12px); }
+@keyframes sdBannerIn {
+  from { opacity: 0; transform: translate(-50%, -10px); }
   to   { opacity: 1; transform: translate(-50%, 0); }
 }
 
 .sd-upgrade-banner__icon {
-  font-size: 1.1rem !important;
-}
-
-/* Tier badge — override to use dynamic color */
-.sd-tier-badge {
-  border: 1px solid;
-  border-radius: 20px;
-  padding: 4px 12px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  letter-spacing: 0.04em;
-}
-
-/* Avatar as button with settings icon */
-.sd-avatar {
-  position: relative;
-  cursor: pointer;
-  background: rgba(255,90,31,0.15);
-  border: 1px solid rgba(255,90,31,0.35);
-  border-radius: 50%;
-  width: 38px;
-  height: 38px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.1rem;
-  color: #FF5A1F;
-  transition: all 0.2s;
-  overflow: hidden;
-}
-
-.sd-avatar:hover {
-  background: rgba(255,90,31,0.25);
-  border-color: rgba(255,90,31,0.6);
-}
-
-.sd-avatar__settings-icon {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(8,8,8,0.85);
-  opacity: 0;
-  transition: opacity 0.2s;
   font-size: 1rem !important;
-  color: #FF5A1F;
-  border-radius: 50%;
 }
 
-.sd-avatar:hover .sd-avatar__settings-icon {
-  opacity: 1;
-}
-
-/* Inline upgrade link in welcome text */
+/* ── Upgrade inline link ──────────────────────────────────────────────────── */
 .sd-upgrade-link {
   background: none;
   border: none;
@@ -786,6 +744,7 @@
   cursor: pointer;
   padding: 0;
   text-decoration: underline;
+  text-underline-offset: 2px;
   text-decoration-color: rgba(255,90,31,0.4);
   transition: text-decoration-color 0.2s;
 }
@@ -794,17 +753,14 @@
   text-decoration-color: #FF5A1F;
 }
 
-/* Locked day in week tracker (free tier) */
+/* ── Free tier — locked week days ────────────────────────────────────────── */
 .sd-week-day--locked {
-  opacity: 0.35;
+  opacity: 0.3;
   cursor: default;
-}
-
-.sd-week-day--locked:hover {
-  border-color: transparent !important;
+  pointer-events: none;
 }
 
 .sd-week-day__lock {
   font-size: 0.7rem !important;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.35);
 }

@@ -1693,69 +1693,81 @@
 
   .challenges-grid { grid-template-columns: 1fr; }
 }
-/* ─── ADAUGĂ ACESTE STILURI LA SFÂRȘITUL LandingScreen.css ────────────────────── */
+/* ─── ADAUGĂ LA SFÂRȘITUL LandingScreen.css ───────────────────────────────── */
 
-/* 4-column pricing grid */
+/* ── 4-column pricing grid ─────────────────────────────────────────────────── */
 .pricing-grid--4 {
   grid-template-columns: repeat(4, 1fr);
 }
 
-/* Free tier card */
+/* ── Free card styling ─────────────────────────────────────────────────────── */
 .pricing-card--free {
-  border-color: rgba(113, 128, 150, 0.2);
+  border-color: rgba(113,128,150,0.25);
 }
 
-.pricing-card--free:hover {
-  border-color: rgba(113, 128, 150, 0.4);
-}
-
-/* "Always Free" badge */
+/* "Always Free" badge — INSIDE card (top-left), nu e taiat de overflow:hidden */
 .pricing-free-badge {
   position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #718096;
-  color: #fff;
-  font-size: 0.65rem;
+  top: 1.25rem;
+  left: 1.25rem;
+  background: rgba(113,128,150,0.2);
+  border: 1px solid rgba(113,128,150,0.4);
+  color: #a0aec0;
+  font-size: 0.62rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  padding: 3px 10px;
-  border-radius: 20px;
-  white-space: nowrap;
+  padding: 0.22rem 0.6rem;
+  border-radius: 100px;
 }
 
-/* Free price text */
+/* Free price display */
 .price-amount--free {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 2.2rem;
-  color: #fff;
+  font-size: 3.5rem;
+  line-height: 1;
+  color: #a0aec0;
 }
 
-/* Free plan ghost button variant */
+/* Free button */
 .btn-ghost--free {
-  border-color: rgba(113, 128, 150, 0.3);
-  color: rgba(255,255,255,0.55);
+  border-color: rgba(113,128,150,0.25);
+  color: rgba(255,255,255,0.4);
 }
-
 .btn-ghost--free:hover {
-  border-color: rgba(113, 128, 150, 0.6);
-  color: rgba(255,255,255,0.85);
-  background: rgba(113, 128, 150, 0.08);
+  border-color: rgba(113,128,150,0.5);
+  color: rgba(255,255,255,0.7);
+  background: rgba(113,128,150,0.07);
 }
 
-/* Grey tier pill for Free in How It Works */
+/* Grey tier pill */
 .tier-pill--grey {
-  background: rgba(113, 128, 150, 0.15);
-  border: 1px solid rgba(113, 128, 150, 0.3);
+  background: rgba(113,128,150,0.12);
+  border: 1px solid rgba(113,128,150,0.3);
   color: #718096;
 }
 
-/* Responsive — pricing grid goes to 2-col then 1-col on small screens */
-@media (max-width: 960px) {
+/* ── Pricing card header — min height so athlete block aligns across all cards */
+.pricing-card__header {
+  min-height: 148px;   /* suficient pentru toate 4 carduri */
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* ── Athlete block — min height fix pentru aliniere ──────────────────────── */
+.pricing-athlete-block {
+  min-height: 88px;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
   .pricing-grid--4 {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .pricing-card__header {
+    min-height: unset;
   }
 }
 
