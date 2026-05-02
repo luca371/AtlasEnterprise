@@ -346,7 +346,7 @@ const ChallengeScreen = () => {
                         {/* Block */}
                         <div className="ch-podium-block" style={{ background: prize.bg, borderColor: prize.border }}>
                           <span className="ch-podium-rank" style={{ color: prize.color }}>
-                            {rank === 1 ? '🥇' : rank === 2 ? '🥈' : '🥉'}
+                            {rank === 1 ? '1' : rank === 2 ? '2' : '3'}
                           </span>
                         </div>
                       </div>
