@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import {
   collection, doc, getDoc, getDocs, addDoc, updateDoc,
-  query, orderBy, arrayUnion, arrayRemove, serverTimestamp,
+  query, orderBy, limit, arrayUnion, arrayRemove, serverTimestamp,
 } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { auth, db, storage } from '../firebase';
@@ -70,9 +70,10 @@ const ChallengeScreen = () => {
         const userSnap = await getDoc(doc(db, 'users', user.uid));
         if (userSnap.exists()) setUserData(userSnap.data());
 
-        // Load challenge
-        const challengeSnap = await getDoc(doc(db, 'weekly_challenge', 'current'));
-        if (challengeSnap.exists()) setChallenge(challengeSnap.data());
+        // Load challenge — reads the first document in the collection
+        const challengeQ = query(collection(db, 'weekly_challenge'), limit(1));
+        const challengeSnap = await getDocs(challengeQ);
+        if (!challengeSnap.empty) setChallenge(challengeSnap.docs[0].data());
 
         // Load submissions
         await loadSubmissions(user.uid);
@@ -314,15 +315,18 @@ const ChallengeScreen = () => {
             {mySubmission ? (
               /* Already submitted */
               <div className="ch-submitted-card">
-                <CheckCircle className="ch-submitted-icon" />
-                <div>
-                  <strong>You've submitted your attempt!</strong>
-                  <p>Your video is live in the community feed below.</p>
+                <div className="ch-submitted-top">
+                  <CheckCircle className="ch-submitted-icon" />
+                  <div>
+                    <strong>You've submitted your attempt!</strong>
+                    <p>Your video is live in the community feed below.</p>
+                  </div>
                 </div>
                 <div className="ch-submitted-preview">
                   <video
                     src={mySubmission.videoUrl}
                     className="ch-submitted-video"
+                    controls
                     playsInline
                     preload="metadata"
                   />
