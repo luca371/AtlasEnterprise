@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import {
   SportsBasketball,
@@ -28,6 +28,8 @@ const TIER_CONFIG = {
   nba:        { label: 'NBA',        color: '#667eea' },
 };
 
+const VALID_TIERS = ['free', 'pro', 'euroleague', 'nba'];
+
 const todayPlan = [
   { label: 'Ball Handling Fundamentals',   duration: '15 min', category: 'Ball Handling', done: false, active: true },
   { label: 'Shooting off the Dribble',     duration: '20 min', category: 'Shooting',      done: false },
@@ -49,32 +51,51 @@ const DayIcon = ({ done, active }) => {
 const StartScreen = () => {
   const navigate  = useNavigate();
   const location  = useLocation();
+
   const [userData, setUserData]           = useState(null);
   const [authUser, setAuthUser]           = useState(null);
   const [loading, setLoading]             = useState(true);
   const [activeDay, setActiveDay]         = useState(2);
   const [upgradeBanner, setUpgradeBanner] = useState(false);
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    if (params.get('upgraded') === 'true') {
-      setUpgradeBanner(true);
-      setTimeout(() => setUpgradeBanner(false), 5000);
-    }
-  }, [location]);
+  const [upgradedTier, setUpgradedTier]   = useState('');
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
       if (!user) { navigate('/login'); return; }
       setAuthUser(user);
+
       try {
         const snap = await getDoc(doc(db, 'users', user.uid));
-        if (snap.exists()) setUserData(snap.data());
-      } catch (e) { /* continue */ }
-      finally { setLoading(false); }
+        if (snap.exists()) {
+          let data = snap.data();
+
+          // ── Daca userul vine de la Stripe cu tier in URL, scriem in Firestore ──
+          const params  = new URLSearchParams(location.search);
+          const tierParam = params.get('tier');
+          const isUpgraded = params.get('upgraded') === 'true';
+
+          if (isUpgraded && tierParam && VALID_TIERS.includes(tierParam)) {
+            // Scriem noul tier in Firestore direct (nu depindem de webhook)
+            await updateDoc(doc(db, 'users', user.uid), {
+              tier: tierParam,
+              updatedAt: new Date().toISOString(),
+            });
+            data = { ...data, tier: tierParam };
+            setUpgradedTier(tierParam);
+            setUpgradeBanner(true);
+            setTimeout(() => setUpgradeBanner(false), 5000);
+          }
+
+          setUserData(data);
+        }
+      } catch (e) {
+        // continue
+      } finally {
+        setLoading(false);
+      }
     });
     return () => unsub();
-  }, [navigate]);
+  }, [navigate, location.search]);
 
   const handleSignOut = async () => {
     await signOut(auth);
@@ -104,13 +125,15 @@ const StartScreen = () => {
         <div className="sd-grid" />
       </div>
 
+      {/* ── Upgrade banner ─────────────────────────────────────────────────── */}
       {upgradeBanner && (
         <div className="sd-upgrade-banner">
           <CheckCircle className="sd-upgrade-banner__icon" />
-          Plan upgraded. Welcome to {tierConfig.label}!
+          Plan upgraded to {TIER_CONFIG[upgradedTier]?.label || upgradedTier}. Welcome!
         </div>
       )}
 
+      {/* ── Top bar ────────────────────────────────────────────────────────── */}
       <header className="sd-topbar">
         <div className="sd-topbar__inner">
           <button className="sd-logo" onClick={() => navigate('/')}>ATLAS</button>
@@ -127,7 +150,6 @@ const StartScreen = () => {
               {tierConfig.label}
             </div>
 
-            {/* Avatar — click mergi la Settings, fara gear icon */}
             <button
               className="sd-avatar sd-avatar--clickable"
               onClick={() => navigate('/settings')}
@@ -145,6 +167,7 @@ const StartScreen = () => {
 
       <main className="sd-main">
 
+        {/* ── Welcome ──────────────────────────────────────────────────────── */}
         <section className="sd-welcome">
           <div className="sd-welcome__text">
             <span className="sd-welcome__date">{today}</span>
@@ -161,7 +184,7 @@ const StartScreen = () => {
                   </button>
                 </span>
               ) : (
-                <span>You have <strong>7 workouts</strong> lined up today. Complete the full week to unlock them.</span>
+                <span>You have <strong>7 workouts</strong> lined up today. Complete the full week to unlock them to your library.</span>
               )}
             </p>
           </div>
@@ -200,6 +223,7 @@ const StartScreen = () => {
           </div>
         </section>
 
+        {/* ── Today's workouts ─────────────────────────────────────────────── */}
         <section className="sd-section">
           <div className="sd-section__header">
             <div className="sd-section__title-wrap">
@@ -233,6 +257,7 @@ const StartScreen = () => {
           </div>
         </section>
 
+        {/* ── Quick stats ──────────────────────────────────────────────────── */}
         <section className="sd-stats-row">
           <div className="sd-stat-card">
             <FitnessCenter className="sd-stat-card__icon" style={{ color: 'var(--orange)' }} />
@@ -256,6 +281,7 @@ const StartScreen = () => {
           </div>
         </section>
 
+        {/* ── Ambassador spotlight ─────────────────────────────────────────── */}
         <section className="sd-ambassador">
           <div className="sd-ambassador__inner">
             <div className="sd-ambassador__text">

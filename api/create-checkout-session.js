@@ -1,38 +1,34 @@
 // api/create-checkout-session.js
-// Vercel Serverless Function — creates a Stripe Checkout session
-// Place this file at the root of your project: /api/create-checkout-session.js
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
+const PRICE_TO_TIER = {
+  'price_1TSYP4253nJJ89FuHVuEVAPh': 'pro',
+  'price_1TSYQF253nJJ89Fu4uZgVzP3': 'euroleague',
+  'price_1TSYQt253nJJ89FuGifFwk97': 'nba',
+};
+
+const ALLOWED_PRICES = Object.keys(PRICE_TO_TIER);
+
 module.exports = async (req, res) => {
-  // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { priceId, userId, email } = req.body;
 
   if (!priceId || !userId || !email) {
-    return res.status(400).json({ error: 'Missing required fields: priceId, userId, email' });
+    return res.status(400).json({ error: 'Missing required fields' });
   }
-
-  // Allowed price IDs — whitelist for security
-  const ALLOWED_PRICES = [
-    'price_1TSYP4253nJJ89FuHVuEVAPh', // Pro
-    'price_1TSYQF253nJJ89Fu4uZgVzP3', // EuroLeague
-    'price_1TSYQt253nJJ89FuGifFwk97', // NBA
-  ];
 
   if (!ALLOWED_PRICES.includes(priceId)) {
     return res.status(400).json({ error: 'Invalid price ID' });
   }
 
-  // Base URL — set APP_URL in Vercel environment variables
+  const tier    = PRICE_TO_TIER[priceId];
   const baseUrl = process.env.APP_URL || `https://${req.headers.host}`;
 
   try {
@@ -41,17 +37,18 @@ module.exports = async (req, res) => {
       payment_method_types: ['card'],
       customer_email: email,
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${baseUrl}/start?upgraded=true`,
+      // Tier inclus in URL — frontend il scrie direct in Firestore
+      success_url: `${baseUrl}/start?upgraded=true&tier=${tier}`,
       cancel_url:  `${baseUrl}/settings`,
-      metadata: { userId },
+      metadata: { userId, tier },
       subscription_data: {
-        metadata: { userId },
+        metadata: { userId, tier },
       },
     });
 
     return res.status(200).json({ url: session.url });
   } catch (error) {
-    console.error('Stripe checkout error:', error.message);
+    console.error('Stripe error:', error.message);
     return res.status(500).json({ error: error.message });
   }
 };
