@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import {
   collection, doc, getDoc, getDocs, addDoc,
-  query, where, orderBy, serverTimestamp,
+  query, where, serverTimestamp,
 } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { auth, db, storage } from '../firebase';
@@ -141,13 +141,16 @@ const PlayerScreen = () => {
   const loadGames = async (uid) => {
     setGamesLoading(true);
     try {
+      // No orderBy — avoids needing a composite Firestore index.
+      // Sort client-side by gameDate descending instead.
       const q = query(
         collection(db, 'player_games'),
-        where('userId', '==', uid),
-        orderBy('gameDate', 'desc')
+        where('userId', '==', uid)
       );
       const snap = await getDocs(q);
-      setGames(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
+      const all = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      all.sort((a, b) => (b.gameDate || '').localeCompare(a.gameDate || ''));
+      setGames(all);
     } catch (e) {
       console.error('Load games error:', e);
     } finally {
