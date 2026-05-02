@@ -124,7 +124,7 @@
 
 .iq-intro__xp {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 40px;
+  font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 64px;
 }
 .iq-intro__xp strong { color: #f5c842; }
 
