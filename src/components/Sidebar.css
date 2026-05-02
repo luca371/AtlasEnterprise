@@ -13,7 +13,12 @@
   flex-direction: column;
   z-index: 300;
   overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Collapsed state (desktop) ──────────────────────────────────────────────── */
+.sb-panel--collapsed {
+  width: 64px;
 }
 
 /* ─── Logo row ───────────────────────────────────────────────────────────────── */
@@ -21,8 +26,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 20px 20px;
+  padding: 24px 14px 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  min-height: 68px;
+  gap: 8px;
 }
 
 .sb-logo {
@@ -30,6 +37,39 @@
   font-size: 1.6rem;
   letter-spacing: 0.15em;
   color: #FF5A1F;
+  white-space: nowrap;
+  flex: 1;
+}
+
+/* Collapse toggle — desktop only */
+.sb-collapse-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  padding: 4px;
+  flex-shrink: 0;
+  transition: all 0.18s;
+  width: 28px;
+  height: 28px;
+}
+
+.sb-collapse-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.sb-collapse-btn .MuiSvgIcon-root { font-size: 1rem !important; }
+
+/* When collapsed, center the collapse button */
+.sb-panel--collapsed .sb-logo-row {
+  justify-content: center;
+  padding: 24px 0 20px;
 }
 
 .sb-close {
@@ -48,11 +88,12 @@
 /* ─── Navigation ─────────────────────────────────────────────────────────────── */
 .sb-nav {
   flex: 1;
-  padding: 16px 12px;
+  padding: 16px 8px;
   display: flex;
   flex-direction: column;
   gap: 2px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .sb-item {
@@ -72,6 +113,15 @@
   transition: all 0.18s;
   position: relative;
   width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Collapsed: center icons */
+.sb-panel--collapsed .sb-item {
+  justify-content: center;
+  padding: 11px 0;
+  gap: 0;
 }
 
 .sb-item:hover:not(.sb-item--soon) {
@@ -129,31 +179,40 @@
 
 /* ─── Footer ─────────────────────────────────────────────────────────────────── */
 .sb-footer {
-  padding: 16px 12px;
+  padding: 12px 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .sb-user {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 10px;
+  padding: 8px 8px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+  cursor: default;
+}
+
+/* Collapsed: center avatar */
+.sb-panel--collapsed .sb-user {
+  justify-content: center;
+  padding: 8px 0;
+  background: transparent;
 }
 
 .sb-user__avatar {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: #fff;
   flex-shrink: 0;
 }
@@ -187,6 +246,7 @@
 .sb-signout {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 10px;
   padding: 9px 12px;
   border: none;
@@ -199,6 +259,14 @@
   width: 100%;
   text-align: left;
   transition: all 0.18s;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Collapsed: center icon */
+.sb-panel--collapsed .sb-signout {
+  justify-content: center;
+  padding: 9px 0;
 }
 
 .sb-signout:hover {
@@ -208,6 +276,7 @@
 
 .sb-signout .MuiSvgIcon-root {
   font-size: 1.1rem !important;
+  flex-shrink: 0;
 }
 
 /* ─── Mobile top bar ─────────────────────────────────────────────────────────── */
@@ -276,22 +345,32 @@
 }
 
 /* ─── Content wrapper ────────────────────────────────────────────────────────── */
-/* Adaugă clasa sb-content-wrap la div-ul root al fiecărui screen */
 .sb-content-wrap {
   padding-left: 240px;
   min-height: 100vh;
+  transition: padding-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Collapsed: shrink content area */
+body.sb-collapsed .sb-content-wrap {
+  padding-left: 64px;
 }
 
 /* ─── Responsive ─────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .sb-panel {
     transform: translateX(-100%);
-    width: 280px;
+    width: 280px !important; /* always full width on mobile */
     box-shadow: 4px 0 40px rgba(0, 0, 0, 0.6);
   }
 
   .sb-panel--open {
     transform: translateX(0);
+  }
+
+  /* Hide collapse button on mobile */
+  .sb-collapse-btn {
+    display: none;
   }
 
   .sb-close {
@@ -306,8 +385,32 @@
     display: block;
   }
 
-  .sb-content-wrap {
+  .sb-content-wrap,
+  body.sb-collapsed .sb-content-wrap {
     padding-left: 0;
     padding-top: 56px;
+  }
+
+  /* Always show labels on mobile */
+  .sb-panel--collapsed .sb-item {
+    justify-content: flex-start;
+    padding: 11px 12px;
+    gap: 12px;
+  }
+
+  .sb-panel--collapsed .sb-user {
+    justify-content: flex-start;
+    padding: 8px 8px;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .sb-panel--collapsed .sb-signout {
+    justify-content: flex-start;
+    padding: 9px 12px;
+  }
+
+  .sb-panel--collapsed .sb-logo-row {
+    justify-content: space-between;
+    padding: 24px 14px 20px;
   }
 }

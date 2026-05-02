@@ -204,18 +204,12 @@
 
 .ch-submitted-card {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  align-items: flex-start;
+  gap: 16px;
   background: rgba(0,212,170,0.07);
   border: 1px solid rgba(0,212,170,0.25);
   border-radius: 14px;
   padding: 20px 24px;
-}
-
-.ch-submitted-top {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
   flex-wrap: wrap;
 }
 
@@ -226,7 +220,7 @@
   margin-top: 2px;
 }
 
-.ch-submitted-top > div {
+.ch-submitted-card > div {
   flex: 1;
   min-width: 160px;
 }
@@ -248,18 +242,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  width: 100%;
+  gap: 6px;
 }
 
 .ch-submitted-video {
-  width: 100%;
-  max-height: 420px;
-  border-radius: 10px;
-  object-fit: contain;
+  width: 120px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
   border: 1px solid rgba(0,212,170,0.3);
-  background: #0d0d0d;
-  display: block;
 }
 
 .ch-submitted-label {
@@ -478,13 +469,13 @@
 .ch-feed-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 14px;
 }
 
 .ch-card {
   background: rgba(255,255,255,0.03);
   border: 1px solid rgba(255,255,255,0.07);
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
   transition: border-color 0.2s, transform 0.2s;
   position: relative;
@@ -492,7 +483,7 @@
 
 .ch-card:hover {
   border-color: rgba(255,255,255,0.13);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .ch-card--own {
@@ -501,15 +492,15 @@
 
 .ch-card__own-badge {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 8px;
+  left: 8px;
   background: #FF5A1F;
   color: #fff;
-  font-size: 0.62rem;
+  font-size: 0.58rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 3px 8px;
+  padding: 2px 7px;
   border-radius: 20px;
   z-index: 10;
 }
@@ -532,33 +523,33 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  gap: 8px;
+  padding: 8px 10px;
+  gap: 6px;
 }
 
 .ch-card__user {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
 }
 
 .ch-card__avatar {
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background: rgba(255,90,31,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.78rem;
   color: #FF5A1F;
   flex-shrink: 0;
 }
 
 .ch-card__username {
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 500;
   color: rgba(255,255,255,0.75);
   white-space: nowrap;
@@ -617,14 +608,12 @@
 /* ─── Responsive ─────────────────────────────────────────────────────────────── */
 @media (max-width: 640px) {
   .ch-main {
-    padding: 24px 16px 60px;
+    padding: 24px 12px 60px;
   }
 
   .ch-feed-grid {
-    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
-  .ch-submitted-card {
-    flex-direction: column;
-  }
+  /* Cards stay 2 columns — same as desktop */
 }
