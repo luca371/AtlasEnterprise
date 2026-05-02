@@ -1,0 +1,179 @@
+/* src/screens/ExperienceScreen.css */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+.xp-root {
+  min-height: 100vh; background: #080808;
+  color: #F5F0E8; font-family: 'DM Sans', sans-serif; position: relative;
+}
+
+.xp-bg  { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+.xp-glow { position: absolute; border-radius: 50%; filter: blur(130px); opacity: 0.1; }
+.xp-glow--1 { width: 500px; height: 500px; background: #f5c842; top: -120px; right: -80px; }
+.xp-glow--2 { width: 400px; height: 400px; background: #FF5A1F; bottom: 0; left: 100px; }
+.xp-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.xp-loading {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; background: #080808; gap: 24px;
+}
+.xp-loading-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 0.15em; color: #FF5A1F; }
+.xp-loading-spinner {
+  width: 28px; height: 28px;
+  border: 2px solid rgba(255,255,255,0.1); border-top-color: #FF5A1F;
+  border-radius: 50%; animation: xp-spin 0.8s linear infinite;
+}
+@keyframes xp-spin { to { transform: rotate(360deg); } }
+
+/* ─── Layout ────────────────────────────────────────────────────────────────── */
+.xp-main {
+  position: relative; z-index: 1;
+  max-width: 760px; margin: 0 auto; padding: 48px 32px 80px;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────────── */
+.xp-header { margin-bottom: 36px; }
+.xp-header__eyebrow {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #f5c842; margin-bottom: 12px;
+}
+.xp-eyebrow-icon { font-size: 1rem !important; }
+.xp-header__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  letter-spacing: 0.04em; line-height: 1; color: #fff; margin: 0 0 10px;
+}
+.xp-header__sub { font-size: 0.9rem; color: rgba(255,255,255,0.4); margin: 0; }
+
+/* ─── XP Hero ─────────────────────────────────────────────────────────────────── */
+.xp-hero {
+  background: rgba(245,200,66,0.05);
+  border: 1px solid rgba(245,200,66,0.18);
+  border-radius: 20px; padding: 36px 32px 28px;
+  text-align: center; margin-bottom: 48px;
+}
+.xp-hero__count {
+  font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem, 10vw, 7rem);
+  line-height: 1; color: #f5c842; letter-spacing: 0.04em;
+}
+.xp-hero__label {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem;
+  letter-spacing: 0.15em; color: rgba(245,200,66,0.5); margin-bottom: 16px;
+}
+.xp-hero__next {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.88rem; color: rgba(255,255,255,0.45); margin-bottom: 24px;
+}
+.xp-hero__next strong { color: inherit; font-weight: 600; }
+.xp-hero__next--maxed { color: #00D4AA !important; }
+
+.xp-hero__bar-wrap { max-width: 480px; margin: 0 auto; }
+.xp-hero__bar {
+  height: 8px; background: rgba(255,255,255,0.07);
+  border-radius: 4px; overflow: hidden; margin-bottom: 8px;
+}
+.xp-hero__bar-fill {
+  height: 100%; border-radius: 4px; transition: width 0.6s ease;
+}
+.xp-hero__bar-labels {
+  display: flex; justify-content: space-between;
+  font-size: 0.72rem; color: rgba(255,255,255,0.3);
+}
+
+/* ─── Sections ───────────────────────────────────────────────────────────────── */
+.xp-section { margin-bottom: 48px; }
+.xp-section__label {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: #f5c842; margin-bottom: 12px;
+}
+.xp-section__title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.9rem;
+  letter-spacing: 0.06em; color: #fff; margin: 0 0 24px;
+}
+
+/* ─── Milestones ─────────────────────────────────────────────────────────────── */
+.xp-milestones { display: flex; flex-direction: column; gap: 12px; }
+
+.xp-milestone {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 18px 22px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 14px; transition: border-color 0.2s;
+  flex-wrap: wrap;
+}
+.xp-milestone--current { background: rgba(255,255,255,0.05); }
+.xp-milestone--unlocked { background: rgba(0,0,0,0.2); }
+
+.xp-milestone__left {
+  display: flex; align-items: center; gap: 14px;
+}
+.xp-milestone__badge {
+  width: 44px; height: 44px; border-radius: 12px; border: 1px solid;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.xp-milestone__name {
+  font-size: 0.95rem; font-weight: 600; color: #fff; margin-bottom: 3px;
+}
+.xp-milestone__req {
+  font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+}
+
+.xp-milestone__status {
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 5px 12px; border-radius: 20px;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.35); flex-shrink: 0;
+}
+.xp-milestone__status--unlocked {}
+
+/* ─── Earn ways ──────────────────────────────────────────────────────────────── */
+.xp-earn-list { display: flex; flex-direction: column; gap: 10px; }
+
+.xp-earn-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+}
+.xp-earn-row__icon {
+  width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.xp-earn-row__icon .MuiSvgIcon-root { font-size: 1.1rem !important; }
+.xp-earn-row__info { flex: 1; min-width: 0; }
+.xp-earn-row__label { font-size: 0.9rem; font-weight: 600; color: rgba(255,255,255,0.85); margin-bottom: 2px; }
+.xp-earn-row__desc  { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+.xp-earn-row__xp    { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.06em; font-weight: 600; flex-shrink: 0; }
+
+/* ─── CTA row ────────────────────────────────────────────────────────────────── */
+.xp-cta-row {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.xp-cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: none; border-radius: 10px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600;
+  padding: 12px 22px; cursor: pointer; transition: opacity 0.2s;
+}
+.xp-cta-btn--iq    { background: #f5c842; color: #000; }
+.xp-cta-btn--start { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.75); }
+.xp-cta-btn:hover  { opacity: 0.85; }
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .xp-main { padding: 24px 14px 60px; }
+  .xp-hero  { padding: 28px 20px 22px; }
+  .xp-milestone { flex-direction: column; align-items: flex-start; }
+  .xp-milestone__status { align-self: flex-start; }
+  .xp-earn-row { padding: 12px 14px; gap: 12px; }
+  .xp-cta-row  { flex-direction: column; }
+  .xp-cta-btn  { justify-content: center; }
+}

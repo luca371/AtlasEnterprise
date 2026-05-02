@@ -18,6 +18,7 @@ import {
 } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { auth, db, storage } from '../firebase';
+import { awardXP } from '../utils/xpUtils';
 import {
   EmojiEvents,
   FavoriteBorder,
@@ -87,6 +88,24 @@ const ChallengeScreen = () => {
     });
     return () => unsub();
   }, [navigate]);
+
+  // ── Award 10 XP to challenge winner (top by likes) ───────────────────────
+  useEffect(() => {
+    const awardWinner = async () => {
+      if (!authUser || submissions.length === 0) return;
+      const top = [...submissions].sort(
+        (a, b) => (b.likedBy?.length || 0) - (a.likedBy?.length || 0)
+      )[0];
+      if (top.userId === authUser.uid && !top.winnerXpAwarded) {
+        try {
+          await updateDoc(doc(db, 'challenge_submissions', top.id), { winnerXpAwarded: true });
+          await awardXP(authUser.uid, 10);
+        } catch (e) { console.error('Winner XP error:', e); }
+      }
+    };
+    awardWinner();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submissions]);
 
   const loadSubmissions = async (uid) => {
     setSubLoading(true);
@@ -184,6 +203,9 @@ const ChallengeScreen = () => {
       setMySubmission(newSubmission);
       setSubmissions((prev) => [newSubmission, ...prev]);
       setUploadFile(null);
+
+      // Award 1 XP for submitting to weekly challenge
+      await awardXP(authUser.uid, 1);
     } catch (e) {
       console.error('Upload error:', e);
       setUploadError('Upload failed. Please try again.');
@@ -346,7 +368,7 @@ const ChallengeScreen = () => {
                         {/* Block */}
                         <div className="ch-podium-block" style={{ background: prize.bg, borderColor: prize.border }}>
                           <span className="ch-podium-rank" style={{ color: prize.color }}>
-                            {rank === 1 ? '1' : rank === 2 ? '2' : '3'}
+                            {rank === 1 ? '🥇' : rank === 2 ? '🥈' : '🥉'}
                           </span>
                         </div>
                       </div>

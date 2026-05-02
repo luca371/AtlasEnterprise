@@ -1,0 +1,323 @@
+/* src/screens/BasketballIQScreen.css */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+.iq-root {
+  min-height: 100vh;
+  background: #080808;
+  color: #F5F0E8;
+  font-family: 'DM Sans', sans-serif;
+  position: relative;
+}
+
+/* ─── Background ─────────────────────────────────────────────────────────────── */
+.iq-bg { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+.iq-glow {
+  position: absolute; border-radius: 50%;
+  filter: blur(130px); opacity: 0.11;
+}
+.iq-glow--1 { width: 500px; height: 500px; background: #f5c842; top: -120px; right: -80px; }
+.iq-glow--2 { width: 400px; height: 400px; background: #667eea; bottom: 0; left: 100px; }
+
+.iq-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ─── Loading ────────────────────────────────────────────────────────────────── */
+.iq-loading {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; background: #080808; gap: 24px;
+}
+.iq-loading-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 0.15em; color: #FF5A1F; }
+.iq-loading-spinner {
+  width: 28px; height: 28px;
+  border: 2px solid rgba(255,255,255,0.1); border-top-color: #FF5A1F;
+  border-radius: 50%; animation: iq-spin 0.8s linear infinite;
+}
+@keyframes iq-spin { to { transform: rotate(360deg); } }
+
+/* ─── Main layout ────────────────────────────────────────────────────────────── */
+.iq-main {
+  position: relative; z-index: 1;
+  max-width: 680px; margin: 0 auto; padding: 48px 32px 80px;
+}
+
+/* ─── Gate ───────────────────────────────────────────────────────────────────── */
+.iq-gate { text-align: center; margin-top: 80px; }
+.iq-gate__icon {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 28px; color: rgba(255,255,255,0.3);
+}
+.iq-gate__icon .MuiSvgIcon-root { font-size: 2rem !important; }
+.iq-gate__title { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 0.06em; color: #fff; margin: 0 0 14px; }
+.iq-gate__sub { font-size: 0.95rem; color: rgba(255,255,255,0.45); line-height: 1.7; margin: 0 0 28px; }
+.iq-gate__sub strong { color: #fff; }
+.iq-gate__cta {
+  background: #f5c842; border: none; border-radius: 10px;
+  color: #000; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 700;
+  padding: 13px 32px; cursor: pointer; transition: opacity 0.2s;
+}
+.iq-gate__cta:hover { opacity: 0.87; }
+
+/* ─── Done today ─────────────────────────────────────────────────────────────── */
+.iq-done { text-align: center; margin-top: 80px; }
+.iq-done__icon { font-size: 3.5rem !important; color: #f5c842; margin-bottom: 20px; }
+.iq-done__title { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; letter-spacing: 0.06em; color: #fff; margin: 0 0 12px; }
+.iq-done__sub { font-size: 0.95rem; color: rgba(255,255,255,0.45); line-height: 1.7; margin: 0 0 28px; max-width: 400px; margin-left: auto; margin-right: auto; }
+.iq-done__xp {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(245,200,66,0.08); border: 1px solid rgba(245,200,66,0.25);
+  border-radius: 20px; padding: 8px 18px;
+  font-size: 0.9rem; color: #f5c842; font-weight: 600; margin-bottom: 24px;
+}
+.iq-done__btn {
+  display: block; margin: 0 auto;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; color: rgba(255,255,255,0.75);
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
+  padding: 11px 24px; cursor: pointer; transition: all 0.2s;
+}
+.iq-done__btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+/* ─── Intro ──────────────────────────────────────────────────────────────────── */
+.iq-intro { text-align: center; max-width: 520px; margin: 0 auto; padding-top: 32px; }
+
+.iq-intro__eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: #f5c842; margin-bottom: 16px;
+}
+.iq-eyebrow-icon { font-size: 1rem !important; }
+
+.iq-intro__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 7vw, 4.5rem);
+  letter-spacing: 0.04em; line-height: 1;
+  color: #fff; margin: 0 0 16px;
+}
+
+.iq-intro__sub {
+  font-size: 0.95rem; color: rgba(255,255,255,0.5); line-height: 1.7;
+  margin: 0 0 36px;
+}
+.iq-intro__sub strong { color: #fff; }
+
+.iq-intro__rules {
+  display: flex; justify-content: center; gap: 24px; margin-bottom: 28px;
+}
+.iq-rule {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px; padding: 16px 24px;
+}
+.iq-rule__num {
+  font-family: 'Bebas Neue', sans-serif; font-size: 2rem;
+  color: #f5c842; letter-spacing: 0.05em; line-height: 1;
+}
+.iq-rule__label { font-size: 0.72rem; color: rgba(255,255,255,0.4); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; }
+
+.iq-intro__xp {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-bottom: 28px;
+}
+.iq-intro__xp strong { color: #f5c842; }
+
+.iq-btn-start {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #f5c842; border: none; border-radius: 12px;
+  color: #000; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 700;
+  padding: 14px 32px; cursor: pointer; transition: opacity 0.2s;
+}
+.iq-btn-start:hover { opacity: 0.87; }
+
+/* ─── Quiz ───────────────────────────────────────────────────────────────────── */
+.iq-quiz { padding-top: 8px; }
+
+.iq-quiz__meta {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.iq-quiz__counter { font-size: 0.8rem; color: rgba(255,255,255,0.4); font-weight: 500; letter-spacing: 0.06em; }
+.iq-quiz__xp-live {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 0.8rem; color: #f5c842; font-weight: 600;
+}
+
+.iq-progress-bar {
+  height: 4px; background: rgba(255,255,255,0.07);
+  border-radius: 2px; overflow: hidden; margin-bottom: 28px;
+}
+.iq-progress-bar__fill {
+  height: 100%; background: #f5c842; border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.iq-question-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px; padding: 28px 28px 24px;
+  margin-bottom: 20px;
+}
+.iq-question-card__label {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: #f5c842; margin-bottom: 16px;
+}
+.iq-question-card__text {
+  font-size: 1.15rem; font-weight: 500; color: #fff;
+  line-height: 1.6; margin: 0;
+}
+
+/* ─── Options ────────────────────────────────────────────────────────────────── */
+.iq-options {
+  display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;
+}
+
+.iq-option {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  color: rgba(255,255,255,0.75);
+  font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+  text-align: left; cursor: pointer;
+  transition: all 0.18s; width: 100%;
+}
+.iq-option:hover:not(:disabled) {
+  background: rgba(245,200,66,0.06);
+  border-color: rgba(245,200,66,0.3);
+  color: #fff;
+}
+
+.iq-option--selected {
+  background: rgba(245,200,66,0.08) !important;
+  border-color: rgba(245,200,66,0.4) !important;
+  color: #fff !important;
+}
+.iq-option--correct {
+  background: rgba(0,212,170,0.1) !important;
+  border-color: rgba(0,212,170,0.4) !important;
+  color: #00D4AA !important;
+}
+.iq-option--wrong {
+  background: rgba(255,80,80,0.1) !important;
+  border-color: rgba(255,80,80,0.35) !important;
+  color: rgba(255,120,120,0.9) !important;
+}
+.iq-option--dim {
+  opacity: 0.35;
+}
+
+.iq-option__letter {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.iq-option--correct .iq-option__letter { background: rgba(0,212,170,0.15); }
+.iq-option--wrong   .iq-option__letter { background: rgba(255,80,80,0.15); }
+
+.iq-option__text { flex: 1; line-height: 1.4; }
+.iq-option__icon { font-size: 1.1rem !important; flex-shrink: 0; }
+
+/* ─── Next button ────────────────────────────────────────────────────────────── */
+.iq-btn-next {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 14px 24px;
+  background: #f5c842; border: none; border-radius: 12px;
+  color: #000; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 700;
+  cursor: pointer; transition: opacity 0.2s;
+  animation: iq-slide-up 0.25s ease;
+}
+.iq-btn-next:hover { opacity: 0.87; }
+
+@keyframes iq-slide-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Result ─────────────────────────────────────────────────────────────────── */
+.iq-result { text-align: center; max-width: 480px; margin: 0 auto; padding-top: 32px; }
+
+.iq-result__badge {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 24px; color: rgba(255,255,255,0.4);
+}
+.iq-result__badge .MuiSvgIcon-root { font-size: 2.5rem !important; }
+
+.iq-result__badge--perfect {
+  background: rgba(245,200,66,0.1) !important;
+  border-color: rgba(245,200,66,0.35) !important;
+  color: #f5c842 !important;
+}
+
+.iq-result__title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 3rem;
+  letter-spacing: 0.06em; color: #fff; margin: 0 0 12px;
+}
+
+.iq-result__sub {
+  font-size: 0.95rem; color: rgba(255,255,255,0.45);
+  line-height: 1.7; margin: 0 0 28px;
+}
+
+.iq-result__xp-card {
+  display: flex; align-items: center; gap: 16px;
+  background: rgba(245,200,66,0.07); border: 1px solid rgba(245,200,66,0.22);
+  border-radius: 14px; padding: 18px 24px; margin-bottom: 24px; text-align: left;
+}
+.iq-result__xp-icon { font-size: 2rem !important; color: #f5c842; flex-shrink: 0; }
+.iq-result__xp-earned { font-size: 1.2rem; font-weight: 700; color: #f5c842; margin-bottom: 2px; }
+.iq-result__xp-total  { font-size: 0.82rem; color: rgba(255,255,255,0.45); }
+
+.iq-result__breakdown {
+  display: flex; flex-direction: column; gap: 8px; margin-bottom: 28px;
+}
+
+.iq-result__row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 16px; border-radius: 10px;
+  font-size: 0.88rem; font-weight: 500;
+}
+.iq-result__row--correct { background: rgba(0,212,170,0.07); color: #00D4AA; }
+.iq-result__row--wrong   { background: rgba(255,80,80,0.07);  color: rgba(255,120,120,0.8); }
+.iq-result__row-icon { font-size: 1rem !important; flex-shrink: 0; }
+.iq-result__row-verdict { margin-left: auto; font-weight: 700; }
+
+.iq-result__actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+.iq-btn-xp {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #f5c842; border: none; border-radius: 10px;
+  color: #000; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 700;
+  padding: 11px 22px; cursor: pointer; transition: opacity 0.2s;
+}
+.iq-btn-xp:hover { opacity: 0.87; }
+
+.iq-btn-home {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; color: rgba(255,255,255,0.6);
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
+  padding: 11px 22px; cursor: pointer; transition: all 0.2s;
+}
+.iq-btn-home:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .iq-main { padding: 24px 16px 60px; }
+  .iq-intro__rules { gap: 12px; }
+  .iq-rule { padding: 12px 16px; }
+  .iq-question-card { padding: 20px 18px; }
+  .iq-question-card__text { font-size: 1rem; }
+  .iq-option { padding: 12px 14px; font-size: 0.88rem; }
+}

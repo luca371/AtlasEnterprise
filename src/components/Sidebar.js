@@ -14,6 +14,8 @@ import {
   Close,
   ChevronLeft,
   ChevronRight,
+  Psychology,
+  WorkspacePremium,
 } from '@mui/icons-material';
 import './Sidebar.css';
 
@@ -21,6 +23,7 @@ const NAV_ITEMS = [
   { label: 'Home',             icon: <HomeOutlined />,          path: '/start',     soon: false },
   { label: "Today's Training", icon: <FitnessCenterOutlined />, path: '/today',     soon: true  },
   { label: 'Weekly Challenge', icon: <EmojiEventsOutlined />,   path: '/challenge', soon: false },
+  { label: 'Basketball IQ',    icon: <Psychology />,            path: '/iq',        soon: false },
   { label: 'Feed',             icon: <DynamicFeedOutlined />,   path: '/feed',      soon: false },
   { label: 'Stars Feed',       icon: <AutoAwesomeOutlined />,   path: '/stars',     soon: true  },
 ];
@@ -107,6 +110,22 @@ const Sidebar = ({ userData, onSignOut }) => {
             {collapsed ? <ChevronRight /> : <ChevronLeft />}
           </button>
         </div>
+
+        {/* XP strip */}
+        {!collapsed && (
+          <button className="sb-xp-strip" onClick={() => handleNav('/experience')}>
+            <WorkspacePremium className="sb-xp-strip__icon" />
+            <span className="sb-xp-strip__text">
+              <strong>{userData?.xp || 0} XP</strong>
+              <span className="sb-xp-strip__link">Learn more</span>
+            </span>
+          </button>
+        )}
+        {collapsed && (
+          <button className="sb-xp-icon-btn" onClick={() => handleNav('/experience')} title={`${userData?.xp || 0} XP — View rewards`}>
+            <WorkspacePremium />
+          </button>
+        )}
 
         {/* Navigation */}
         <nav className="sb-nav">

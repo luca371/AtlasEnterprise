@@ -85,6 +85,65 @@
 
 .sb-close:hover { color: #fff; }
 
+/* ─── XP Strip ───────────────────────────────────────────────────────────────── */
+.sb-xp-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px 10px;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  background: rgba(245,200,66,0.05);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background 0.18s;
+}
+.sb-xp-strip:hover { background: rgba(245,200,66,0.09); }
+
+.sb-xp-strip__icon {
+  font-size: 0.9rem !important;
+  color: #f5c842;
+  flex-shrink: 0;
+}
+.sb-xp-strip__text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+.sb-xp-strip__text strong {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #f5c842;
+  white-space: nowrap;
+}
+.sb-xp-strip__link {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.3);
+  white-space: nowrap;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Collapsed XP icon button */
+.sb-xp-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px 0 10px;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  background: rgba(245,200,66,0.05);
+  cursor: pointer;
+  transition: background 0.18s;
+  color: #f5c842;
+}
+.sb-xp-icon-btn:hover { background: rgba(245,200,66,0.09); }
+.sb-xp-icon-btn .MuiSvgIcon-root { font-size: 1rem !important; }
+
 /* ─── Navigation ─────────────────────────────────────────────────────────────── */
 .sb-nav {
   flex: 1;

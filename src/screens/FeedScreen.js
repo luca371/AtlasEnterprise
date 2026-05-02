@@ -9,17 +9,19 @@ import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import {
   collection, doc, getDoc, getDocs, addDoc, updateDoc,
-  query, orderBy, arrayUnion, arrayRemove,
-  serverTimestamp,
+  query, orderBy, where, arrayUnion, arrayRemove,
+  serverTimestamp, Timestamp,
 } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { auth, db, storage } from '../firebase';
+import { awardXP, checkLikeMilestone } from '../utils/xpUtils';
 import {
   DynamicFeed,
   CloudUpload,
   FavoriteBorder,
   Favorite,
   LockOutlined,
+  PlayArrow,
   Image as ImageIcon,
   Videocam,
   EmojiEvents,
@@ -168,6 +170,9 @@ const FeedScreen = () => {
       setPostedToday(true);
       setUploadFile(null);
       setCaption('');
+
+      // Award 1 XP for feed post
+      await awardXP(authUser.uid, 1);
     } catch (e) {
       console.error('Post error:', e);
       setUploadError('Upload failed. Try again.');
@@ -193,6 +198,8 @@ const FeedScreen = () => {
       await updateDoc(doc(db, 'feed_posts', post.id), {
         likedBy: isLiked ? arrayRemove(authUser.uid) : arrayUnion(authUser.uid),
       });
+      // Check 10-likes milestone XP (only when liking, not unliking)
+      if (!isLiked) await checkLikeMilestone(authUser.uid);
     } catch { await loadFeed(authUser.uid); }
     finally { setLikingId(null); }
   };
