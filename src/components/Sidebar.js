@@ -16,6 +16,7 @@ import {
   ChevronRight,
   Psychology,
   WorkspacePremium,
+  BarChart,
 } from '@mui/icons-material';
 import './Sidebar.css';
 
@@ -24,6 +25,7 @@ const NAV_ITEMS = [
   { label: "Today's Training", icon: <FitnessCenterOutlined />, path: '/today',     soon: true  },
   { label: 'Weekly Challenge', icon: <EmojiEventsOutlined />,   path: '/challenge', soon: false },
   { label: 'Basketball IQ',    icon: <Psychology />,            path: '/iq',        soon: false, pro: true },
+  { label: 'My Stats',         icon: <BarChart />,              path: '/player',    soon: false },
   { label: 'Feed',             icon: <DynamicFeedOutlined />,   path: '/feed',      soon: false },
   { label: 'Stars Feed',       icon: <AutoAwesomeOutlined />,   path: '/stars',     soon: true  },
 ];
@@ -78,6 +80,12 @@ const Sidebar = ({ userData, onSignOut }) => {
 
   const toggleCollapse = () => setCollapsed((prev) => !prev);
 
+  // Active check — /player and /player/:userId both highlight "My Stats"
+  const isActive = (path) => {
+    if (path === '/player') return location.pathname.startsWith('/player');
+    return location.pathname === path;
+  };
+
   return (
     <>
       {/* Mobile top bar with hamburger */}
@@ -130,11 +138,11 @@ const Sidebar = ({ userData, onSignOut }) => {
         {/* Navigation */}
         <nav className="sb-nav">
           {NAV_ITEMS.map((item) => {
-            const isActive = location.pathname === item.path;
+            const active = isActive(item.path);
             return (
               <button
                 key={item.path}
-                className={`sb-item ${isActive ? 'sb-item--active' : ''} ${item.soon ? 'sb-item--soon' : ''}`}
+                className={`sb-item ${active ? 'sb-item--active' : ''} ${item.soon ? 'sb-item--soon' : ''}`}
                 onClick={() => !item.soon && handleNav(item.path)}
                 title={item.soon ? `${item.label} — Coming soon` : item.label}
               >

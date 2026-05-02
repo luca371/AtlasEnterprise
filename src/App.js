@@ -10,22 +10,25 @@ import ChallengeScreen    from './screens/ChallengeScreen';
 import FeedScreen         from './screens/FeedScreen';
 import BasketballIQScreen from './screens/BasketballIQScreen';
 import ExperienceScreen   from './screens/ExperienceScreen';
+import PlayerScreen       from './screens/PlayerScreen';
 import './App.css';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/"           element={<LandingScreen />} />
-        <Route path="/login"      element={<LoginScreen />} />
-        <Route path="/signup"     element={<SignupScreen />} />
-        <Route path="/start"      element={<StartScreen />} />
-        <Route path="/settings"   element={<SettingsScreen />} />
-        <Route path="/challenge"  element={<ChallengeScreen />} />
-        <Route path="/feed"       element={<FeedScreen />} />
-        <Route path="/iq"         element={<BasketballIQScreen />} />
-        <Route path="/experience" element={<ExperienceScreen />} />
-        <Route path="*"           element={<LandingScreen />} />
+        <Route path="/"                element={<LandingScreen />} />
+        <Route path="/login"           element={<LoginScreen />} />
+        <Route path="/signup"          element={<SignupScreen />} />
+        <Route path="/start"           element={<StartScreen />} />
+        <Route path="/settings"        element={<SettingsScreen />} />
+        <Route path="/challenge"       element={<ChallengeScreen />} />
+        <Route path="/feed"            element={<FeedScreen />} />
+        <Route path="/iq"              element={<BasketballIQScreen />} />
+        <Route path="/experience"      element={<ExperienceScreen />} />
+        <Route path="/player"          element={<PlayerScreen />} />
+        <Route path="/player/:userId"  element={<PlayerScreen />} />
+        <Route path="*"                element={<LandingScreen />} />
       </Routes>
     </Router>
   );

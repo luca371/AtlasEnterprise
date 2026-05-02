@@ -449,7 +449,11 @@ const FeedScreen = () => {
                       )}
 
                       <div className="fd-card__footer">
-                        <div className="fd-card__user">
+                        <div
+                          className="fd-card__user fd-card__user--clickable"
+                          onClick={() => navigate(`/player/${post.userId}`)}
+                          title={`View ${post.userName || 'Athlete'}'s stats`}
+                        >
                           <div className="fd-card__avatar">
                             {(post.userName || 'A').charAt(0).toUpperCase()}
                           </div>

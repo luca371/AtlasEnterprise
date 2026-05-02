@@ -662,3 +662,19 @@
   .fd-gate__tiers { gap: 10px; }
   .fd-tier-card { width: 100px; padding: 14px 12px; }
 }
+/* ─── Clickable user row in feed cards ──────────────────────────────────────── */
+.fd-card__user--clickable {
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 6px;
+  margin: -4px -6px;
+  transition: background 0.15s;
+}
+
+.fd-card__user--clickable:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+.fd-card__user--clickable:hover .fd-card__username {
+  color: #FF5A1F;
+}
