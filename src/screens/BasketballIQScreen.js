@@ -11,12 +11,10 @@ import {
   EmojiEvents,
   LockOutlined,
   ArrowForward,
-  Replay,
   WorkspacePremium,
 } from '@mui/icons-material';
 import Sidebar from '../components/Sidebar';
 import QUESTIONS from '../data/questionsData';
-import { awardXP } from '../utils/xpUtils';
 import './BasketballIQScreen.css';
 
 const TIER_ORDER = { free: 0, pro: 1, euroleague: 2, nba: 3 };

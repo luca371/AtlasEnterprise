@@ -31,14 +31,12 @@ const EARN_WAYS = [
 
 const ExperienceScreen = () => {
   const navigate = useNavigate();
-  const [authUser, setAuthUser] = useState(null);
   const [userData, setUserData] = useState(null);
   const [loading, setLoading]   = useState(true);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (user) => {
       if (!user) { navigate('/login'); return; }
-      setAuthUser(user);
       try {
         const snap = await getDoc(doc(db, 'users', user.uid));
         if (snap.exists()) setUserData(snap.data());
