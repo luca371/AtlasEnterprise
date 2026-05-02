@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import {
   collection, doc, getDoc, getDocs, addDoc, updateDoc,
-  query, orderBy, where, arrayUnion, arrayRemove, serverTimestamp,
+  query, orderBy, arrayUnion, arrayRemove, serverTimestamp,
 } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { auth, db, storage } from '../firebase';
