@@ -261,8 +261,10 @@
 .ch-podium-slot--3 .ch-podium-block { height: 52px; }
 
 .ch-podium-rank {
-  font-size: 1.6rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
   line-height: 1;
+  letter-spacing: 0.02em;
 }
 
 /* ─── Prizes row ─────────────────────────────────────────────────────────────── */

@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import {
   collection, doc, getDoc, getDocs, addDoc, updateDoc,
-  query, orderBy, arrayUnion, arrayRemove,
-  serverTimestamp,
+  query, orderBy, where, arrayUnion, arrayRemove,
+  serverTimestamp, Timestamp,
 } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { auth, db, storage } from '../firebase';
@@ -21,6 +21,7 @@ import {
   FavoriteBorder,
   Favorite,
   LockOutlined,
+  PlayArrow,
   Image as ImageIcon,
   Videocam,
   EmojiEvents,
@@ -45,6 +46,7 @@ const FeedScreen = () => {
   const [postedToday, setPostedToday] = useState(false);
 
   const [uploadFile, setUploadFile]     = useState(null);
+  const [previewUrl, setPreviewUrl]     = useState(null);
   const [caption, setCaption]           = useState('');
   const [uploading, setUploading]       = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -53,6 +55,14 @@ const FeedScreen = () => {
   const [likingId, setLikingId] = useState(null);
 
   const fileInputRef = useRef(null);
+
+  // Create preview URL once when file is picked — revoke on cleanup to avoid memory leaks
+  useEffect(() => {
+    if (!uploadFile) { setPreviewUrl(null); return; }
+    const url = URL.createObjectURL(uploadFile);
+    setPreviewUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [uploadFile]);
 
   // ── Auth ──────────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -326,7 +336,7 @@ const FeedScreen = () => {
                   <div className="fd-upload-preview">
                     {fileIsVideo ? (
                       <video
-                        src={URL.createObjectURL(uploadFile)}
+                        src={previewUrl}
                         className="fd-preview-media"
                         playsInline
                         preload="metadata"
@@ -334,7 +344,7 @@ const FeedScreen = () => {
                       />
                     ) : (
                       <img
-                        src={URL.createObjectURL(uploadFile)}
+                        src={previewUrl}
                         className="fd-preview-media"
                         alt="preview"
                       />
@@ -361,7 +371,7 @@ const FeedScreen = () => {
                         <CloudUpload style={{ fontSize: '1rem' }} />
                         Post to Feed
                       </button>
-                      <button className="fd-btn-cancel" onClick={() => { setUploadFile(null); setCaption(''); setUploadError(''); }}>
+                      <button className="fd-btn-cancel" onClick={() => { setUploadFile(null); setPreviewUrl(null); setCaption(''); setUploadError(''); }}>
                         Cancel
                       </button>
                     </div>

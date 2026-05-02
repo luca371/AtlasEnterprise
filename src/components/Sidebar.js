@@ -23,7 +23,7 @@ const NAV_ITEMS = [
   { label: 'Home',             icon: <HomeOutlined />,          path: '/start',     soon: false },
   { label: "Today's Training", icon: <FitnessCenterOutlined />, path: '/today',     soon: true  },
   { label: 'Weekly Challenge', icon: <EmojiEventsOutlined />,   path: '/challenge', soon: false },
-  { label: 'Basketball IQ',    icon: <Psychology />,            path: '/iq',        soon: false },
+  { label: 'Basketball IQ',    icon: <Psychology />,            path: '/iq',        soon: false, pro: true },
   { label: 'Feed',             icon: <DynamicFeedOutlined />,   path: '/feed',      soon: false },
   { label: 'Stars Feed',       icon: <AutoAwesomeOutlined />,   path: '/stars',     soon: true  },
 ];
@@ -143,6 +143,7 @@ const Sidebar = ({ userData, onSignOut }) => {
                   <>
                     <span className="sb-item__label">{item.label}</span>
                     {item.soon && <span className="sb-soon-badge">Soon</span>}
+                    {item.pro  && <span className="sb-pro-badge">Pro+</span>}
                   </>
                 )}
               </button>
