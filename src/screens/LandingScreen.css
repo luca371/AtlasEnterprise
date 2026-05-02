@@ -1700,18 +1700,45 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
-/* ── Free card styling ─────────────────────────────────────────────────────── */
-.pricing-card--free {
-  border-color: rgba(113,128,150,0.25);
+/* ── Pricing card header — height fix pentru aliniere ─────────────────────── */
+/* Suprascrie regula existenta .pricing-card__header */
+.pricing-card__header {
+  min-height: 0;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
-/* "Always Free" badge — INSIDE card (top-left), nu e taiat de overflow:hidden */
+/* Wrap pentru includes — asigura aceeasi inaltime la toate cardurile */
+.pricing-includes-wrap {
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.pricing-includes-placeholder {
+  height: 22px;
+}
+
+/* ── Athlete block — min-height fix ───────────────────────────────────────── */
+.pricing-athlete-block {
+  min-height: 90px;
+  align-items: flex-start;
+}
+
+/* ── Free tier card ────────────────────────────────────────────────────────── */
+.pricing-card--free {
+  border-color: rgba(113,128,150,0.2);
+}
+
+/* "Always Free" badge — inside card, top-left, nu e taiat de overflow:hidden */
 .pricing-free-badge {
   position: absolute;
   top: 1.25rem;
   left: 1.25rem;
-  background: rgba(113,128,150,0.2);
-  border: 1px solid rgba(113,128,150,0.4);
+  background: rgba(113,128,150,0.15);
+  border: 1px solid rgba(113,128,150,0.35);
   color: #a0aec0;
   font-size: 0.62rem;
   font-weight: 700;
@@ -1721,7 +1748,7 @@
   border-radius: 100px;
 }
 
-/* Free price display */
+/* Free price text */
 .price-amount--free {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 3.5rem;
@@ -1731,12 +1758,12 @@
 
 /* Free button */
 .btn-ghost--free {
-  border-color: rgba(113,128,150,0.25);
-  color: rgba(255,255,255,0.4);
+  border-color: rgba(113,128,150,0.2);
+  color: rgba(255,255,255,0.35);
 }
 .btn-ghost--free:hover {
-  border-color: rgba(113,128,150,0.5);
-  color: rgba(255,255,255,0.7);
+  border-color: rgba(113,128,150,0.45);
+  color: rgba(255,255,255,0.65);
   background: rgba(113,128,150,0.07);
 }
 
@@ -1747,27 +1774,30 @@
   color: #718096;
 }
 
-/* ── Pricing card header — min height so athlete block aligns across all cards */
-.pricing-card__header {
-  min-height: 148px;   /* suficient pentru toate 4 carduri */
-  margin-bottom: 1.5rem;
+/* ── Ambassador thumbnail — FARA cerc/avatar, doar dot + text ─────────────── */
+.amb-thumb {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
 }
 
-/* ── Athlete block — min height fix pentru aliniere ──────────────────────── */
-.pricing-athlete-block {
-  min-height: 88px;
+/* Mic dot colorat in loc de cerc mare cu initiale */
+.amb-thumb__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: transform 0.2s;
 }
 
-/* ── Responsive ─────────────────────────────────────────────────────────────── */
+.amb-thumb--active .amb-thumb__dot {
+  transform: scale(1.5);
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .pricing-grid--4 {
     grid-template-columns: repeat(2, 1fr);
-  }
-  .pricing-card__header {
-    min-height: unset;
   }
 }
 

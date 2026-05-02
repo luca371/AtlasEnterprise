@@ -10,7 +10,6 @@ import {
 } from '@mui/icons-material';
 import './LandingScreen.css';
 
-// ─── Counter Hook ─────────────────────────────────────────────────────────────
 const useCounter = (end, duration = 2200) => {
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
@@ -38,7 +37,6 @@ const useCounter = (end, duration = 2200) => {
   return [count, ref];
 };
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
 const ambassadors = [
   { id: 1, name: 'DUANE WASHINGTON JR.', position: 'Guard', team: 'Partizan Belgrade', tier: 'EuroLeague Tier', number: '7', specialty: 'Scoring & Shot Creation', quote: 'Every rep in practice is a rep closer to the big stage.', color: '#FF5A1F', initials: 'DW', logo: '/images/logo_duane.png' },
   { id: 2, name: 'COMING SOON', position: 'Pro Athlete', team: 'EuroLeague', tier: 'EuroLeague Tier', number: '?', specialty: 'To Be Announced', quote: 'The next ambassador is being finalized.', color: '#00D4AA', initials: '?', logo: null },
@@ -46,12 +44,12 @@ const ambassadors = [
 ];
 
 const features = [
-  { icon: <VideoLibrary />,   title: 'Pro Workout Library',        desc: 'Access real training routines from Euroleague athletes — exactly what they do in the off-season.' },
-  { icon: <CalendarMonth />,  title: 'Daily Training Plans',       desc: '7–8 workouts delivered every day, randomly selected from your tier\'s athletes. Fresh every session.' },
-  { icon: <EmojiEvents />,    title: 'Skill Challenges',           desc: 'Weekly challenges from your favorite players. Complete the week and unlock everything permanently.' },
-  { icon: <BarChart />,       title: 'Progress Tracking',          desc: 'Log sessions, measure improvement, and see your development over time.' },
-  { icon: <Whatshot />,       title: 'Ambassador Feed',            desc: 'Stay connected with pro athletes through exclusive updates, tips, and behind-the-scenes content.' },
-  { icon: <TrackChanges />,   title: 'Position-Specific Training', desc: 'Programs tailored to your position — Guard, Forward, or Center.' },
+  { icon: <VideoLibrary />,  title: 'Pro Workout Library',        desc: 'Access real training routines from Euroleague athletes — exactly what they do in the off-season.' },
+  { icon: <CalendarMonth />, title: 'Daily Training Plans',       desc: "7–8 workouts delivered every day, randomly selected from your tier's athletes. Fresh every session." },
+  { icon: <EmojiEvents />,   title: 'Skill Challenges',           desc: 'Weekly challenges from your favorite players. Complete the week and unlock everything permanently.' },
+  { icon: <BarChart />,      title: 'Progress Tracking',          desc: 'Log sessions, measure improvement, and see your development over time.' },
+  { icon: <Whatshot />,      title: 'Ambassador Feed',            desc: 'Stay connected with pro athletes through exclusive updates, tips, and behind-the-scenes content.' },
+  { icon: <TrackChanges />,  title: 'Position-Specific Training', desc: 'Programs tailored to your position — Guard, Forward, or Center.' },
 ];
 
 const dailyPlan = [
@@ -63,9 +61,9 @@ const dailyPlan = [
 ];
 
 const challenges = [
-  { title: '500 Makes Challenge',   player: 'Duane Washington Jr.', reward: 'Pro Badge',      deadline: '7 days left', participants: 1240, icon: <SportsBasketball /> },
-  { title: 'No-Look Pass Master',   player: 'Duane Washington Jr.', reward: 'Vision Badge',   deadline: '3 days left', participants: 892,  icon: <Visibility /> },
-  { title: '30-Day Consistency',    player: 'Atlas Team',           reward: 'Iron Will Badge', deadline: 'Ongoing',    participants: 3401, icon: <Whatshot /> },
+  { title: '500 Makes Challenge', player: 'Duane Washington Jr.', reward: 'Pro Badge',      deadline: '7 days left', participants: 1240, icon: <SportsBasketball /> },
+  { title: 'No-Look Pass Master', player: 'Duane Washington Jr.', reward: 'Vision Badge',   deadline: '3 days left', participants: 892,  icon: <Visibility /> },
+  { title: '30-Day Consistency',  player: 'Atlas Team',           reward: 'Iron Will Badge', deadline: 'Ongoing',    participants: 3401, icon: <Whatshot /> },
 ];
 
 const plans = [
@@ -79,13 +77,7 @@ const plans = [
     includes: null,
     athletes: 'Pro-level athletes',
     athleteDesc: 'Get started with 3 training days per week from verified Pro athletes.',
-    perks: [
-      'Mon, Wed & Fri training days',
-      'Pro athlete content only',
-      'All 7 training categories',
-      'Weekly challenges — view & join',
-      'Community posting in challenges',
-    ],
+    perks: ['Mon, Wed & Fri training days', 'Pro athlete content only', 'All 7 training categories', 'Weekly challenges — view & join', 'Community posting in challenges'],
   },
   {
     id: 'pro',
@@ -97,13 +89,7 @@ const plans = [
     includes: null,
     athletes: 'Pro-level athletes',
     athleteDesc: 'Daily workouts designed and delivered by verified Pro athletes.',
-    perks: [
-      '7 training days per week',
-      'All 7 training categories',
-      'Ball Handling, Shooting, Strength & more',
-      'Complete the week — unlock to library',
-      'Progress tracking & ambassador feed',
-    ],
+    perks: ['7 training days per week', 'All 7 training categories', 'Ball Handling, Shooting, Strength & more', 'Complete the week — unlock to library', 'Progress tracking & ambassador feed'],
   },
   {
     id: 'euroleague',
@@ -115,13 +101,7 @@ const plans = [
     includes: 'Pro',
     athletes: 'EuroLeague athletes',
     athleteDesc: 'Daily workouts from active EuroLeague players — including Duane Washington Jr.',
-    perks: [
-      '7 training days per week',
-      'All 7 training categories',
-      'Ball Handling, Shooting, Strength & more',
-      'Complete the week — unlock to library',
-      'Progress tracking & ambassador feed',
-    ],
+    perks: ['7 training days per week', 'All 7 training categories', 'Ball Handling, Shooting, Strength & more', 'Complete the week — unlock to library', 'Progress tracking & ambassador feed'],
   },
   {
     id: 'nba',
@@ -133,36 +113,29 @@ const plans = [
     includes: 'EuroLeague + Pro',
     athletes: 'NBA-level athletes',
     athleteDesc: 'Daily workouts from the highest level of the game. The pinnacle of basketball training.',
-    perks: [
-      '7 training days per week',
-      'All 7 training categories',
-      'Ball Handling, Shooting, Strength & more',
-      'Complete the week — unlock to library',
-      'Progress tracking & ambassador feed',
-    ],
+    perks: ['7 training days per week', 'All 7 training categories', 'Ball Handling, Shooting, Strength & more', 'Complete the week — unlock to library', 'Progress tracking & ambassador feed'],
   },
 ];
 
 const trainingTypes = ['Ball Handling', 'Shooting', 'Strength', 'Post Up', 'Mid Range', 'Stamina', 'Court IQ'];
 
 const DayIcon = ({ done, active }) => {
-  if (done)   return <CheckCircle          className="day-icon day-icon--done" />;
-  if (active) return <PlayArrow            className="day-icon day-icon--active" />;
-  return        <RadioButtonUnchecked      className="day-icon day-icon--upcoming" />;
+  if (done)   return <CheckCircle       className="day-icon day-icon--done" />;
+  if (active) return <PlayArrow         className="day-icon day-icon--active" />;
+  return        <RadioButtonUnchecked   className="day-icon day-icon--upcoming" />;
 };
 
-// ─── Main Component ───────────────────────────────────────────────────────────
 const LandingScreen = () => {
   const navigate = useNavigate();
   const [activeAmbassador, setActiveAmbassador] = useState(0);
   const [scrollY, setScrollY]   = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const heroRef       = useRef(null);
+  const heroRef        = useRef(null);
   const ambassadorsRef = useRef(null);
-  const howRef        = useRef(null);
-  const featuresRef   = useRef(null);
-  const pricingRef    = useRef(null);
+  const howRef         = useRef(null);
+  const featuresRef    = useRef(null);
+  const pricingRef     = useRef(null);
 
   const [userCount,    userRef]    = useCounter(12400, 2000);
   const [workoutCount, workoutRef] = useCounter(340,   1800);
@@ -192,7 +165,7 @@ const LandingScreen = () => {
   return (
     <div className="land-root">
 
-      {/* ── NAV ────────────────────────────────────────────────────────────── */}
+      {/* ── NAV ──────────────────────────────────────────────────────────────── */}
       <nav className={`land-nav ${scrollY > 60 ? 'land-nav--scrolled' : ''}`}>
         <div className="land-nav__inner">
           <button className="land-nav__logo-btn" onClick={() => scrollTo(heroRef)}>ATLAS</button>
@@ -224,7 +197,7 @@ const LandingScreen = () => {
         </div>
       </nav>
 
-      {/* ── HERO ────────────────────────────────────────────────────────────── */}
+      {/* ── HERO ─────────────────────────────────────────────────────────────── */}
       <section className="land-hero" ref={heroRef}>
         <div className="land-hero__bg">
           <div className="hero-grain" />
@@ -267,7 +240,7 @@ const LandingScreen = () => {
         </button>
       </section>
 
-      {/* ── AMBASSADOR CAROUSEL ─────────────────────────────────────────────── */}
+      {/* ── AMBASSADOR CAROUSEL ──────────────────────────────────────────────── */}
       <section className="land-ambassadors" id="ambassadors" ref={ambassadorsRef}>
         <div className="land-section-label">Pro Athletes</div>
         <h2 className="land-section-title">
@@ -276,6 +249,7 @@ const LandingScreen = () => {
         <p className="land-section-sub">Our ambassadors share their actual workouts, not curated content.</p>
 
         <div className="amb-carousel">
+          {/* Main card — ONLY place where the photo shows */}
           <div className="amb-card amb-card--active" style={{ '--card-color': current.color }}>
             <div className="amb-card__number">{current.number}</div>
             <div className="amb-card__avatar">
@@ -315,6 +289,7 @@ const LandingScreen = () => {
             <div className="amb-card__glow" style={{ background: current.color }} />
           </div>
 
+          {/* Dots */}
           <div className="amb-dots">
             {ambassadors.map((_, i) => (
               <button
@@ -326,7 +301,7 @@ const LandingScreen = () => {
             ))}
           </div>
 
-          {/* THUMBNAILS — arata DOAR initiale, nu poza (fix duplicate Duane) */}
+          {/* Thumbnails — FARA cerc/initiale, doar nume + team */}
           <div className="amb-thumbs">
             {ambassadors.map((a, i) => (
               <button
@@ -335,12 +310,10 @@ const LandingScreen = () => {
                 onClick={() => setActiveAmbassador(i)}
                 style={{ '--thumb-color': a.color }}
               >
-                <div className="amb-thumb__avatar" style={{ background: a.color }}>
-                  {a.initials}
-                </div>
+                <div className="amb-thumb__dot" style={{ background: a.color }} />
                 <div className="amb-thumb__info">
                   <span className="amb-thumb__name">{a.name}</span>
-                  <span className="amb-thumb__team">{a.team}</span>
+                  <span className="amb-thumb__team">{a.team} · {a.tier}</span>
                 </div>
               </button>
             ))}
@@ -348,14 +321,13 @@ const LandingScreen = () => {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ────────────────────────────────────────────────────── */}
+      {/* ── HOW IT WORKS ─────────────────────────────────────────────────────── */}
       <section className="land-how" id="how" ref={howRef}>
         <div className="land-section-label">The System</div>
         <h2 className="land-section-title">
           HOW YOUR WEEK<br /><span className="text-accent">ACTUALLY WORKS</span>
         </h2>
         <p className="land-section-sub">Every day is different. Every week you unlock more. Here's the system.</p>
-
         <div className="how-flow">
           <div className="how-flow__step">
             <div className="how-flow__icon-wrap how-flow__icon-wrap--teal"><Star /></div>
@@ -371,9 +343,7 @@ const LandingScreen = () => {
               </div>
             </div>
           </div>
-
           <div className="how-flow__connector"><ArrowForward /></div>
-
           <div className="how-flow__step">
             <div className="how-flow__icon-wrap how-flow__icon-wrap--orange"><Shuffle /></div>
             <div className="how-flow__content">
@@ -385,9 +355,7 @@ const LandingScreen = () => {
               </div>
             </div>
           </div>
-
           <div className="how-flow__connector"><ArrowForward /></div>
-
           <div className="how-flow__step">
             <div className="how-flow__icon-wrap how-flow__icon-wrap--purple"><CalendarMonth /></div>
             <div className="how-flow__content">
@@ -397,16 +365,13 @@ const LandingScreen = () => {
               <div className="how-flow__week">
                 {['M','T','W','T','F','S','S'].map((d, i) => (
                   <div key={i} className={`week-day ${i < 2 ? 'week-day--done' : i === 2 ? 'week-day--active' : ''}`}>
-                    {d}
-                    {i < 2 && <CheckCircle className="week-check" />}
+                    {d}{i < 2 && <CheckCircle className="week-check" />}
                   </div>
                 ))}
               </div>
             </div>
           </div>
-
           <div className="how-flow__connector"><ArrowForward /></div>
-
           <div className="how-flow__step">
             <div className="how-flow__icon-wrap how-flow__icon-wrap--gold"><LockOpen /></div>
             <div className="how-flow__content">
@@ -423,7 +388,7 @@ const LandingScreen = () => {
         </div>
       </section>
 
-      {/* ── PRICING ─────────────────────────────────────────────────────────── */}
+      {/* ── PRICING ──────────────────────────────────────────────────────────── */}
       <section className="land-pricing" id="pricing" ref={pricingRef}>
         <div className="land-section-label">Plans</div>
         <h2 className="land-section-title">
@@ -447,14 +412,10 @@ const LandingScreen = () => {
               className={`pricing-card ${plan.popular ? 'pricing-card--popular' : ''} ${plan.id === 'free' ? 'pricing-card--free' : ''}`}
               style={{ '--plan-color': plan.color }}
             >
-              {/* Badge — INSIDE card (nu e taiat de overflow:hidden) */}
-              {plan.popular && (
-                <div className="pricing-popular-badge">Most Popular</div>
-              )}
-              {plan.id === 'free' && (
-                <div className="pricing-free-badge">Always Free</div>
-              )}
+              {plan.popular && <div className="pricing-popular-badge">Most Popular</div>}
+              {plan.id === 'free' && <div className="pricing-free-badge">Always Free</div>}
 
+              {/* Header — fixed height so all cards align */}
               <div className="pricing-card__header">
                 <h3 className="pricing-card__name">{plan.name}</h3>
                 <p className="pricing-card__tagline">{plan.tagline}</p>
@@ -469,14 +430,20 @@ const LandingScreen = () => {
                     </>
                   )}
                 </div>
-                {plan.includes && (
-                  <div className="pricing-includes">
-                    <Check className="includes-check" />
-                    Includes {plan.includes} tier
-                  </div>
-                )}
+                {/* Spacer div so cards without "includes" still align */}
+                <div className="pricing-includes-wrap">
+                  {plan.includes ? (
+                    <div className="pricing-includes">
+                      <Check className="includes-check" />
+                      Includes {plan.includes} tier
+                    </div>
+                  ) : (
+                    <div className="pricing-includes-placeholder" />
+                  )}
+                </div>
               </div>
 
+              {/* Athlete block — fixed min-height */}
               <div
                 className="pricing-athlete-block"
                 style={{
@@ -523,7 +490,7 @@ const LandingScreen = () => {
         </p>
       </section>
 
-      {/* ── FEATURES ────────────────────────────────────────────────────────── */}
+      {/* ── FEATURES ─────────────────────────────────────────────────────────── */}
       <section className="land-features" id="features" ref={featuresRef}>
         <div className="land-section-label">Platform</div>
         <h2 className="land-section-title">
@@ -550,7 +517,8 @@ const LandingScreen = () => {
               YOUR DAILY<br /><span className="text-accent">TRAINING PLAN</span>
             </h2>
             <p className="land-section-sub land-section-sub--left">
-              Every session is designed by pro athletes. Structured. Progressive. Finish the week and every workout is yours forever.
+              Every session is designed by pro athletes. Structured. Progressive.
+              Finish the week and every workout is yours forever.
             </p>
             <button className="btn-primary" onClick={() => navigate('/signup')}>
               See Full Plan <ArrowForward className="btn-icon" />
