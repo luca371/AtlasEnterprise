@@ -45,7 +45,6 @@ const SignupScreen = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError]   = useState('');
   const [done, setDone]     = useState(false);
-  const [direction, setDirection] = useState('forward');
 
   // ── Step 0 — Account ──
   const [email, setEmail]             = useState('');
@@ -104,13 +103,11 @@ const SignupScreen = () => {
     const err = validate();
     if (err) { setError(err); return; }
     setError('');
-    setDirection('forward');
     setStep((s) => s + 1);
   };
 
   const back = () => {
     setError('');
-    setDirection('back');
     setStep((s) => s - 1);
   };
 
