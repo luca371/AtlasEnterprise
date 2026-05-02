@@ -5,20 +5,11 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import {
-  SportsBasketball,
-  PlayArrow,
-  CheckCircle,
-  RadioButtonUnchecked,
-  LockOpen,
-  Lock,
-  EmojiEvents,
-  Whatshot,
-  BarChart,
-  ArrowForward,
-  LogoutOutlined,
-  CalendarMonth,
-  FitnessCenter,
+  SportsBasketball, PlayArrow, CheckCircle, RadioButtonUnchecked,
+  LockOpen, Lock, EmojiEvents, Whatshot, BarChart, ArrowForward,
+  CalendarMonth, FitnessCenter,
 } from '@mui/icons-material';
+import Sidebar from '../components/Sidebar';
 import './StartScreen.css';
 
 const TIER_CONFIG = {
@@ -69,13 +60,11 @@ const StartScreen = () => {
         if (snap.exists()) {
           let data = snap.data();
 
-          // ── Daca userul vine de la Stripe cu tier in URL, scriem in Firestore ──
-          const params  = new URLSearchParams(location.search);
+          const params    = new URLSearchParams(location.search);
           const tierParam = params.get('tier');
           const isUpgraded = params.get('upgraded') === 'true';
 
           if (isUpgraded && tierParam && VALID_TIERS.includes(tierParam)) {
-            // Scriem noul tier in Firestore direct (nu depindem de webhook)
             await updateDoc(doc(db, 'users', user.uid), {
               tier: tierParam,
               updatedAt: new Date().toISOString(),
@@ -88,11 +77,8 @@ const StartScreen = () => {
 
           setUserData(data);
         }
-      } catch (e) {
-        // continue
-      } finally {
-        setLoading(false);
-      }
+      } catch (e) { /* continue */ }
+      finally { setLoading(false); }
     });
     return () => unsub();
   }, [navigate, location.search]);
@@ -125,181 +111,172 @@ const StartScreen = () => {
         <div className="sd-grid" />
       </div>
 
-      {/* ── Upgrade banner ─────────────────────────────────────────────────── */}
-      {upgradeBanner && (
-        <div className="sd-upgrade-banner">
-          <CheckCircle className="sd-upgrade-banner__icon" />
-          Plan upgraded to {TIER_CONFIG[upgradedTier]?.label || upgradedTier}. Welcome!
-        </div>
-      )}
+      {/* Sidebar */}
+      <Sidebar userData={userData} onSignOut={handleSignOut} />
 
-      {/* ── Top bar ────────────────────────────────────────────────────────── */}
-      <header className="sd-topbar">
-        <div className="sd-topbar__inner">
-          <button className="sd-logo" onClick={() => navigate('/')}>ATLAS</button>
-          <div className="sd-topbar__right">
-            <div
-              className="sd-tier-badge"
-              style={{
-                background:  `${tierConfig.color}18`,
-                borderColor: `${tierConfig.color}40`,
-                color:        tierConfig.color,
-              }}
-            >
-              <SportsBasketball className="sd-tier-icon" />
-              {tierConfig.label}
+      {/* Content wrap — offset for sidebar */}
+      <div className="sb-content-wrap">
+
+        {/* Upgrade banner */}
+        {upgradeBanner && (
+          <div className="sd-upgrade-banner">
+            <CheckCircle className="sd-upgrade-banner__icon" />
+            Plan upgraded to {TIER_CONFIG[upgradedTier]?.label}. Welcome!
+          </div>
+        )}
+
+        <main className="sd-main">
+
+          {/* Welcome */}
+          <section className="sd-welcome">
+            <div className="sd-welcome__text">
+              <span className="sd-welcome__date">{today}</span>
+              <h1 className="sd-welcome__title">
+                READY TO WORK,<br />
+                <span className="sd-accent">{firstName.toUpperCase()}?</span>
+              </h1>
+              <p className="sd-welcome__sub">
+                {subscriptionTier === 'free' ? (
+                  <span>
+                    You have <strong>3 training days</strong> this week (Mon, Wed, Fri).{' '}
+                    <button className="sd-upgrade-link" onClick={() => navigate('/settings')}>
+                      Upgrade for daily access
+                    </button>
+                  </span>
+                ) : (
+                  <span>You have <strong>7 workouts</strong> lined up today. Complete the full week to unlock them.</span>
+                )}
+              </p>
             </div>
 
-            <button
-              className="sd-avatar sd-avatar--clickable"
-              onClick={() => navigate('/settings')}
-              title="Settings"
-            >
-              {firstName.charAt(0).toUpperCase()}
-            </button>
+            {/* Tier badge */}
+            <div className="sd-tier-info">
+              <div
+                className="sd-tier-badge"
+                style={{
+                  background:  `${tierConfig.color}18`,
+                  borderColor: `${tierConfig.color}40`,
+                  color:        tierConfig.color,
+                }}
+              >
+                <SportsBasketball className="sd-tier-icon" />
+                {tierConfig.label} Plan
+              </div>
+            </div>
 
-            <button className="sd-signout" onClick={handleSignOut} title="Sign out">
-              <LogoutOutlined />
-            </button>
-          </div>
-        </div>
-      </header>
+            {/* Week tracker */}
+            <div className="sd-week-tracker">
+              <span className="sd-week-label">THIS WEEK</span>
+              <div className="sd-week-days">
+                {weekDays.map((d, i) => {
+                  const isLocked = subscriptionTier === 'free' && i !== 0 && i !== 2 && i !== 4;
+                  return (
+                    <div
+                      key={i}
+                      className={`sd-week-day ${i < activeDay ? 'sd-week-day--done' : i === activeDay ? 'sd-week-day--active' : ''} ${isLocked ? 'sd-week-day--locked' : ''}`}
+                      onClick={() => !isLocked && setActiveDay(i)}
+                    >
+                      <span className="sd-week-day__letter">{d}</span>
+                      {i < activeDay
+                        ? <CheckCircle className="sd-week-day__check" />
+                        : isLocked
+                        ? <Lock className="sd-week-day__lock" />
+                        : <span className="sd-week-day__num">{i + 1}</span>
+                      }
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="sd-week-progress">
+                <div className="sd-week-progress__bar" style={{ width: `${(activeDay / 7) * 100}%` }} />
+              </div>
+              <div className="sd-week-unlock">
+                {activeDay < 7
+                  ? <><Lock className="sd-unlock-icon" /> Complete {7 - activeDay} more day{7 - activeDay !== 1 ? 's' : ''} to unlock your library</>
+                  : <><LockOpen className="sd-unlock-icon sd-unlock-icon--open" /> Week complete — library unlocked!</>
+                }
+              </div>
+            </div>
+          </section>
 
-      <main className="sd-main">
+          {/* Today's workouts */}
+          <section className="sd-section">
+            <div className="sd-section__header">
+              <div className="sd-section__title-wrap">
+                <CalendarMonth className="sd-section__icon" />
+                <h2 className="sd-section__title">TODAY'S PLAN</h2>
+              </div>
+              <span className="sd-section__meta">{position} · {todayPlan.length} sessions</span>
+            </div>
 
-        {/* ── Welcome ──────────────────────────────────────────────────────── */}
-        <section className="sd-welcome">
-          <div className="sd-welcome__text">
-            <span className="sd-welcome__date">{today}</span>
-            <h1 className="sd-welcome__title">
-              READY TO WORK,<br />
-              <span className="sd-accent">{firstName.toUpperCase()}?</span>
-            </h1>
-            <p className="sd-welcome__sub">
-              {subscriptionTier === 'free' ? (
-                <span>
-                  You have <strong>3 training days</strong> this week (Mon, Wed, Fri).{' '}
-                  <button className="sd-upgrade-link" onClick={() => navigate('/settings')}>
-                    Upgrade for daily access
+            <div className="sd-workout-list">
+              {todayPlan.map((w, i) => (
+                <div key={i} className={`sd-workout ${w.active ? 'sd-workout--active' : ''} ${w.done ? 'sd-workout--done' : ''}`}>
+                  <div className="sd-workout__check"><DayIcon done={w.done} active={w.active} /></div>
+                  <div className="sd-workout__body">
+                    <span className="sd-workout__label">{w.label}</span>
+                    <div className="sd-workout__meta">
+                      <span className="sd-workout__cat">{w.category}</span>
+                      <span className="sd-workout__dur">{w.duration}</span>
+                    </div>
+                  </div>
+                  <button className="sd-workout__btn">
+                    {w.active ? 'Start' : 'View'} <ArrowForward className="sd-workout__arrow" />
                   </button>
-                </span>
-              ) : (
-                <span>You have <strong>7 workouts</strong> lined up today. Complete the full week to unlock them to your library.</span>
-              )}
-            </p>
-          </div>
-
-          <div className="sd-week-tracker">
-            <span className="sd-week-label">THIS WEEK</span>
-            <div className="sd-week-days">
-              {weekDays.map((d, i) => {
-                const isLocked = subscriptionTier === 'free' && i !== 0 && i !== 2 && i !== 4;
-                return (
-                  <div
-                    key={i}
-                    className={`sd-week-day ${i < activeDay ? 'sd-week-day--done' : i === activeDay ? 'sd-week-day--active' : ''} ${isLocked ? 'sd-week-day--locked' : ''}`}
-                    onClick={() => !isLocked && setActiveDay(i)}
-                  >
-                    <span className="sd-week-day__letter">{d}</span>
-                    {i < activeDay
-                      ? <CheckCircle className="sd-week-day__check" />
-                      : isLocked
-                      ? <Lock className="sd-week-day__lock" />
-                      : <span className="sd-week-day__num">{i + 1}</span>
-                    }
-                  </div>
-                );
-              })}
-            </div>
-            <div className="sd-week-progress">
-              <div className="sd-week-progress__bar" style={{ width: `${(activeDay / 7) * 100}%` }} />
-            </div>
-            <div className="sd-week-unlock">
-              {activeDay < 7
-                ? <><Lock className="sd-unlock-icon" /> Complete {7 - activeDay} more day{7 - activeDay !== 1 ? 's' : ''} to unlock your library</>
-                : <><LockOpen className="sd-unlock-icon sd-unlock-icon--open" /> Week complete — library unlocked!</>
-              }
-            </div>
-          </div>
-        </section>
-
-        {/* ── Today's workouts ─────────────────────────────────────────────── */}
-        <section className="sd-section">
-          <div className="sd-section__header">
-            <div className="sd-section__title-wrap">
-              <CalendarMonth className="sd-section__icon" />
-              <h2 className="sd-section__title">TODAY'S PLAN</h2>
-            </div>
-            <span className="sd-section__meta">{position} · {todayPlan.length} sessions</span>
-          </div>
-
-          <div className="sd-workout-list">
-            {todayPlan.map((w, i) => (
-              <div key={i} className={`sd-workout ${w.active ? 'sd-workout--active' : ''} ${w.done ? 'sd-workout--done' : ''}`}>
-                <div className="sd-workout__check"><DayIcon done={w.done} active={w.active} /></div>
-                <div className="sd-workout__body">
-                  <span className="sd-workout__label">{w.label}</span>
-                  <div className="sd-workout__meta">
-                    <span className="sd-workout__cat">{w.category}</span>
-                    <span className="sd-workout__dur">{w.duration}</span>
-                  </div>
                 </div>
-                <button className="sd-workout__btn">
-                  {w.active ? 'Start' : 'View'} <ArrowForward className="sd-workout__arrow" />
-                </button>
-              </div>
-            ))}
-          </div>
-
-          <div className="sd-unlock-hint">
-            <LockOpen className="sd-hint-icon" />
-            <span>Finish all 7 days this week to unlock every workout permanently to your library</span>
-          </div>
-        </section>
-
-        {/* ── Quick stats ──────────────────────────────────────────────────── */}
-        <section className="sd-stats-row">
-          <div className="sd-stat-card">
-            <FitnessCenter className="sd-stat-card__icon" style={{ color: 'var(--orange)' }} />
-            <span className="sd-stat-card__num">0</span>
-            <span className="sd-stat-card__label">Workouts Done</span>
-          </div>
-          <div className="sd-stat-card">
-            <Whatshot className="sd-stat-card__icon" style={{ color: '#ff9800' }} />
-            <span className="sd-stat-card__num">0</span>
-            <span className="sd-stat-card__label">Day Streak</span>
-          </div>
-          <div className="sd-stat-card">
-            <EmojiEvents className="sd-stat-card__icon" style={{ color: 'var(--gold)' }} />
-            <span className="sd-stat-card__num">0</span>
-            <span className="sd-stat-card__label">Badges Earned</span>
-          </div>
-          <div className="sd-stat-card">
-            <BarChart className="sd-stat-card__icon" style={{ color: 'var(--teal)' }} />
-            <span className="sd-stat-card__num">0<span className="sd-stat-card__unit">%</span></span>
-            <span className="sd-stat-card__label">Week Progress</span>
-          </div>
-        </section>
-
-        {/* ── Ambassador spotlight ─────────────────────────────────────────── */}
-        <section className="sd-ambassador">
-          <div className="sd-ambassador__inner">
-            <div className="sd-ambassador__text">
-              <span className="sd-ambassador__eyebrow">Your Coach</span>
-              <h3 className="sd-ambassador__name">DUANE WASHINGTON JR.</h3>
-              <p className="sd-ambassador__team">Partizan Belgrade · Guard</p>
-              <blockquote className="sd-ambassador__quote">
-                "Every rep in practice is a rep closer to the big stage."
-              </blockquote>
-              <div className="sd-ambassador__tier">
-                <span className="sd-amb-tier-badge">EuroLeague Tier</span>
-              </div>
+              ))}
             </div>
-            <div className="sd-ambassador__number">7</div>
-          </div>
-        </section>
 
-      </main>
+            <div className="sd-unlock-hint">
+              <LockOpen className="sd-hint-icon" />
+              <span>Finish all 7 days this week to unlock every workout permanently to your library</span>
+            </div>
+          </section>
+
+          {/* Quick stats */}
+          <section className="sd-stats-row">
+            <div className="sd-stat-card">
+              <FitnessCenter className="sd-stat-card__icon" style={{ color: 'var(--orange)' }} />
+              <span className="sd-stat-card__num">0</span>
+              <span className="sd-stat-card__label">Workouts Done</span>
+            </div>
+            <div className="sd-stat-card">
+              <Whatshot className="sd-stat-card__icon" style={{ color: '#ff9800' }} />
+              <span className="sd-stat-card__num">0</span>
+              <span className="sd-stat-card__label">Day Streak</span>
+            </div>
+            <div className="sd-stat-card">
+              <EmojiEvents className="sd-stat-card__icon" style={{ color: 'var(--gold)' }} />
+              <span className="sd-stat-card__num">0</span>
+              <span className="sd-stat-card__label">Badges Earned</span>
+            </div>
+            <div className="sd-stat-card">
+              <BarChart className="sd-stat-card__icon" style={{ color: 'var(--teal)' }} />
+              <span className="sd-stat-card__num">0<span className="sd-stat-card__unit">%</span></span>
+              <span className="sd-stat-card__label">Week Progress</span>
+            </div>
+          </section>
+
+          {/* Ambassador spotlight */}
+          <section className="sd-ambassador">
+            <div className="sd-ambassador__inner">
+              <div className="sd-ambassador__text">
+                <span className="sd-ambassador__eyebrow">Your Coach</span>
+                <h3 className="sd-ambassador__name">DUANE WASHINGTON JR.</h3>
+                <p className="sd-ambassador__team">Partizan Belgrade · Guard</p>
+                <blockquote className="sd-ambassador__quote">
+                  "Every rep in practice is a rep closer to the big stage."
+                </blockquote>
+                <div className="sd-ambassador__tier">
+                  <span className="sd-amb-tier-badge">EuroLeague Tier</span>
+                </div>
+              </div>
+              <div className="sd-ambassador__number">7</div>
+            </div>
+          </section>
+
+        </main>
+      </div>
     </div>
   );
 };
