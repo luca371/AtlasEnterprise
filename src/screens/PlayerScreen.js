@@ -321,6 +321,7 @@ const PlayerScreen = () => {
                   <span className="pl-meta-sep">{displayData?.age || 'Unknown'}</span>
                   <span className="pl-meta-sep">·</span>
                   <span className="pl-meta-sep">{displayData?.gender || 'Unknown'}</span>
+                  <span className="pl-meta-sep">·</span>
                   <span className="pl-games-count">{games.length} game{games.length !== 1 ? 's' : ''} logged</span>
                 </div>
               </div>
