@@ -564,7 +564,6 @@ const SettingsScreen = () => {
                 const isLoading = checkoutLoading === plan.id;
                 const currentPrice = PLANS.find((p) => p.id === currentTier)?.price || 0;
                 const isUpgrade = plan.price > currentPrice;
-                const isDowngrade = plan.price < currentPrice;
 
                 return (
                   <div
