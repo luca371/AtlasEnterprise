@@ -1,0 +1,763 @@
+/* src/screens/SignupScreen.css — Atlas Basketball */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+
+.signup-root {
+  --orange: #FF5A1F;
+  --teal: #00D4AA;
+  --purple: #667eea;
+  --gold: #f5c842;
+  --white: #F5F0E8;
+  --muted: #888;
+  --border: rgba(255,255,255,0.08);
+  --bg: #0a0a0a;
+  --bg-2: #111111;
+  --bg-3: #161616;
+
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-x: hidden;
+  padding: 6rem 1.5rem 4rem;
+  position: relative;
+}
+
+/* ── Background ─────────────────────────────────────────────────────────── */
+.signup-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.su-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(130px);
+}
+
+.su-glow--1 {
+  width: 700px; height: 700px;
+  background: var(--orange);
+  opacity: 0.06;
+  top: -250px; right: -200px;
+  animation: glowPulse 8s ease-in-out infinite alternate;
+}
+
+.su-glow--2 {
+  width: 500px; height: 500px;
+  background: var(--teal);
+  opacity: 0.05;
+  bottom: -150px; left: -150px;
+  animation: glowPulse 10s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes glowPulse {
+  from { transform: scale(1); opacity: 0.05; }
+  to   { transform: scale(1.15); opacity: 0.1; }
+}
+
+.su-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ── Logo ────────────────────────────────────────────────────────────────── */
+.signup-logo {
+  position: fixed;
+  top: 1.5rem;
+  left: 2rem;
+  z-index: 10;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.signup-logo:hover { color: var(--orange); }
+
+/* ── Shell ───────────────────────────────────────────────────────────────── */
+.signup-shell {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ── Progress section ────────────────────────────────────────────────────── */
+.su-progress-wrap {
+  margin-bottom: 2.5rem;
+  animation: fadeDown 0.5s ease-out both;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.su-steps {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.su-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  position: relative;
+}
+
+/* Connector lines between steps */
+.su-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: calc(50% + 14px);
+  right: calc(-50% + 14px);
+  height: 1px;
+  background: var(--border);
+  z-index: 0;
+  transition: background 0.4s;
+}
+
+.su-step--done:not(:last-child)::after {
+  background: rgba(0,212,170,0.4);
+}
+
+.su-step__dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--bg-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.su-step--active .su-step__dot {
+  border-color: var(--orange);
+  background: rgba(255,90,31,0.12);
+  box-shadow: 0 0 0 4px rgba(255,90,31,0.1);
+}
+
+.su-step--done .su-step__dot {
+  border-color: var(--teal);
+  background: rgba(0,212,170,0.12);
+}
+
+.su-step__num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+
+.su-step--active .su-step__num { color: var(--orange); }
+
+.su-step__check {
+  font-size: 0.9rem !important;
+  color: var(--teal) !important;
+}
+
+.su-step__label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+
+.su-step--active .su-step__label { color: var(--white); }
+.su-step--done   .su-step__label { color: var(--teal); }
+
+/* Progress bar */
+.su-progress-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.su-progress-bar__fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--orange), var(--teal));
+  border-radius: 100px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.su-progress-pct {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: right;
+  margin-top: 0.4rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* ── Card ────────────────────────────────────────────────────────────────── */
+.su-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.su-card--enter-right {
+  animation: slideInRight 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.su-card--enter-left {
+  animation: slideInLeft 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.su-card-header { margin-bottom: 2rem; }
+
+.su-card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.04em;
+  margin: 0 0 0.3rem;
+  line-height: 1;
+}
+
+.su-card-sub {
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* Error */
+.su-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 60, 60, 0.1);
+  border: 1px solid rgba(255, 60, 60, 0.25);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.87rem;
+  color: #ff6b6b;
+  margin-bottom: 1.5rem;
+  animation: shakeIn 0.3s ease-out;
+}
+
+@keyframes shakeIn {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-4px); }
+  75%       { transform: translateX(4px); }
+}
+
+.su-error-icon { font-size: 1rem !important; flex-shrink: 0; }
+
+/* ── Fields ──────────────────────────────────────────────────────────────── */
+.su-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.su-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.su-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.su-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.su-label-optional {
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.25);
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+.su-input {
+  width: 100%;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--white);
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+  -moz-appearance: textfield;
+}
+
+.su-input::-webkit-outer-spin-button,
+.su-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+.su-input::placeholder { color: rgba(255,255,255,0.18); }
+
+.su-input:focus {
+  border-color: rgba(255,90,31,0.5);
+  background: #1a1a1a;
+  box-shadow: 0 0 0 3px rgba(255,90,31,0.08);
+}
+
+.su-input--error {
+  border-color: rgba(255, 60, 60, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(255, 60, 60, 0.08) !important;
+}
+
+.su-input--ok {
+  border-color: rgba(0,212,170,0.5) !important;
+  box-shadow: 0 0 0 3px rgba(0,212,170,0.08) !important;
+}
+
+.su-select {
+  width: 100%;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+}
+
+.su-select:focus {
+  border-color: rgba(255,90,31,0.5);
+  box-shadow: 0 0 0 3px rgba(255,90,31,0.08);
+}
+
+.su-select option { background: var(--bg-3); color: var(--white); }
+
+/* Password input */
+.su-input-wrap { position: relative; }
+.su-input--pw  { padding-right: 3rem; }
+
+.su-pw-toggle {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.su-pw-toggle:hover { color: var(--white); }
+.su-pw-toggle .MuiSvgIcon-root { font-size: 1.1rem !important; }
+
+.su-input-check {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem !important;
+  color: var(--teal) !important;
+  pointer-events: none;
+}
+
+/* Password strength */
+.su-pw-strength {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+.su-pw-bars {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.su-pw-bar {
+  flex: 1;
+  height: 3px;
+  border-radius: 100px;
+  background: var(--border);
+  transition: background 0.3s;
+}
+
+.su-pw-bar--active { background: var(--bar-color); }
+
+.su-pw-label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+/* Instagram prefix input */
+.su-input-prefix-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.su-input-prefix {
+  position: absolute;
+  left: 1rem;
+  font-size: 1rem;
+  color: var(--muted);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.su-input--prefixed {
+  padding-left: 1.9rem;
+}
+
+/* ── Position choice buttons ─────────────────────────────────────────────── */
+.su-choice-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.su-choice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 0.5rem;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.su-choice:hover {
+  border-color: rgba(255,90,31,0.3);
+  color: var(--white);
+}
+
+.su-choice--active {
+  border-color: var(--orange);
+  background: rgba(255,90,31,0.1);
+  color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(255,90,31,0.08);
+}
+
+.su-choice-icon {
+  font-size: 1.4rem !important;
+  transition: color 0.2s;
+}
+
+/* ── Level buttons ───────────────────────────────────────────────────────── */
+.su-level-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.su-level {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.su-level:hover {
+  border-color: rgba(255,90,31,0.3);
+  color: var(--white);
+}
+
+.su-level--active {
+  border-color: var(--orange);
+  background: rgba(255,90,31,0.08);
+  color: var(--orange);
+}
+
+.su-level__num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.su-level__name { font-size: 0.88rem; }
+
+/* Terms */
+.su-terms {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+  padding: 0.75rem 1rem;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.su-terms a {
+  color: var(--orange);
+  text-decoration: none;
+}
+
+.su-terms a:hover { text-decoration: underline; }
+
+/* ── Navigation ──────────────────────────────────────────────────────────── */
+.su-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.su-btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.su-btn-back:hover {
+  border-color: rgba(255,255,255,0.25);
+  color: var(--white);
+  background: rgba(255,255,255,0.04);
+}
+
+.su-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.85rem 1.75rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+}
+
+.su-btn-primary:hover:not(:disabled) {
+  background: #ff7340;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255,90,31,0.35);
+}
+
+.su-btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.su-btn-primary--loading { pointer-events: none; }
+
+.su-btn-primary--xl {
+  padding: 1rem 2.5rem;
+  font-size: 1.05rem;
+  border-radius: 10px;
+}
+
+.su-btn-icon {
+  font-size: 1rem !important;
+  transition: transform 0.2s;
+}
+
+.su-btn-primary:hover .su-btn-icon,
+.su-btn-back:hover .su-btn-icon { transform: translateX(3px); }
+
+.su-btn-back:hover .su-btn-icon { transform: translateX(-3px); }
+
+.su-spinner {
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Switch */
+.su-switch {
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.su-switch button {
+  background: none;
+  border: none;
+  color: var(--orange);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.3rem;
+  transition: opacity 0.2s;
+}
+
+.su-switch button:hover { opacity: 0.7; }
+
+/* ── Success screen ───────────────────────────────────────────────────────── */
+.signup-success {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  animation: fadeUp 0.6s ease-out both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.success-icon-wrap {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(0,212,170,0.12);
+  border: 2px solid rgba(0,212,170,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
+}
+
+@keyframes popIn {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.success-icon {
+  font-size: 2.5rem !important;
+  color: var(--teal) !important;
+}
+
+.success-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 10vw, 5rem);
+  letter-spacing: 0.06em;
+  margin: 0 0 1rem;
+  line-height: 1;
+}
+
+.success-sub {
+  font-size: 1.05rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0 0 2.5rem;
+  max-width: 380px;
+}
+
+.success-sub strong { color: var(--white); }
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .signup-root { padding: 5rem 1rem 3rem; }
+
+  .su-card { padding: 1.75rem 1.25rem; }
+
+  .su-row { grid-template-columns: 1fr; }
+
+  .su-choice-group { grid-template-columns: 1fr 1fr 1fr; }
+
+  .su-step__label { display: none; }
+
+  .su-progress-wrap { margin-bottom: 2rem; }
+}
+
+@media (max-width: 420px) {
+  .su-choice-group { grid-template-columns: 1fr; }
+  .su-choice { flex-direction: row; padding: 0.75rem 1rem; }
+}

@@ -1,0 +1,432 @@
+/* src/screens/LoginScreen.css — Atlas Basketball */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+
+.login-root {
+  --orange: #FF5A1F;
+  --teal: #00D4AA;
+  --purple: #667eea;
+  --white: #F5F0E8;
+  --muted: #888;
+  --border: rgba(255,255,255,0.08);
+  --bg: #0a0a0a;
+  --bg-2: #111111;
+  --bg-3: #161616;
+
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* ── Background ─────────────────────────────────────────────────────────── */
+.login-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.login-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+}
+
+.login-glow--1 {
+  width: 600px; height: 600px;
+  background: var(--orange);
+  opacity: 0.07;
+  top: -200px; left: -200px;
+  animation: glowPulse 7s ease-in-out infinite alternate;
+}
+
+.login-glow--2 {
+  width: 400px; height: 400px;
+  background: var(--teal);
+  opacity: 0.06;
+  bottom: -100px; right: -100px;
+  animation: glowPulse 9s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes glowPulse {
+  from { transform: scale(1); opacity: 0.06; }
+  to   { transform: scale(1.15); opacity: 0.12; }
+}
+
+.login-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ── Logo ────────────────────────────────────────────────────────────────── */
+.login-logo {
+  position: fixed;
+  top: 1.5rem;
+  left: 2rem;
+  z-index: 10;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.login-logo:hover { color: var(--orange); }
+
+/* ── Container ───────────────────────────────────────────────────────────── */
+.login-container {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+/* ── Left Panel ──────────────────────────────────────────────────────────── */
+.login-panel--left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 4rem 5rem 5rem;
+  border-right: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  animation: fadeSlideLeft 0.7s ease-out both;
+}
+
+@keyframes fadeSlideLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.login-panel__content {
+  max-width: 420px;
+  width: 100%;
+}
+
+.login-panel__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,90,31,0.1);
+  border: 1px solid rgba(255,90,31,0.25);
+  border-radius: 100px;
+  padding: 0.35rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 2rem;
+}
+
+.panel-badge-icon { font-size: 0.9rem !important; }
+
+.login-panel__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 6vw, 5.5rem);
+  line-height: 0.9;
+  letter-spacing: 0.03em;
+  margin: 0 0 1.5rem;
+}
+
+.login-accent { color: var(--orange); }
+
+.login-panel__sub {
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin: 0 0 3rem;
+  max-width: 340px;
+}
+
+.login-panel__stats {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.login-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.login-stat__num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--orange);
+  line-height: 1;
+}
+
+.login-stat__label {
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+.login-stat__divider {
+  width: 1px;
+  height: 36px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* ── Right Panel ─────────────────────────────────────────────────────────── */
+.login-panel--right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 5rem 5rem 4rem;
+  animation: fadeSlideRight 0.7s ease-out 0.1s both;
+}
+
+@keyframes fadeSlideRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.login-form-wrap {
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-form-header { margin-bottom: 2.5rem; }
+
+.login-form-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.8rem;
+  letter-spacing: 0.04em;
+  margin: 0 0 0.4rem;
+  line-height: 1;
+}
+
+.login-form-sub {
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ── Form ────────────────────────────────────────────────────────────────── */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.login-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 60, 60, 0.1);
+  border: 1px solid rgba(255, 60, 60, 0.25);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.87rem;
+  color: #ff6b6b;
+  animation: shakeIn 0.3s ease-out;
+}
+
+@keyframes shakeIn {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.error-icon { font-size: 1rem !important; flex-shrink: 0; }
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.login-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.login-forgot {
+  background: none;
+  border: none;
+  color: var(--orange);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+  padding: 0;
+  transition: opacity 0.2s;
+}
+
+.login-forgot:hover { opacity: 0.7; }
+
+.login-input {
+  width: 100%;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--white);
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.login-input::placeholder { color: rgba(255,255,255,0.2); }
+
+.login-input:focus {
+  border-color: rgba(255,90,31,0.5);
+  background: var(--bg-3);
+  box-shadow: 0 0 0 3px rgba(255,90,31,0.08);
+}
+
+.login-input-wrap {
+  position: relative;
+}
+
+.login-input--pw { padding-right: 3rem; }
+
+.pw-toggle {
+  position: absolute;
+  right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.pw-toggle:hover { color: var(--white); }
+.pw-toggle .MuiSvgIcon-root { font-size: 1.1rem !important; }
+
+.login-submit {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  margin-top: 0.5rem;
+}
+
+.login-submit:hover:not(:disabled) {
+  background: #ff7340;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(255,90,31,0.35);
+}
+
+.login-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.login-submit--loading { pointer-events: none; }
+
+.login-spinner {
+  width: 20px; height: 20px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.btn-icon {
+  font-size: 1.1rem !important;
+  transition: transform 0.2s;
+}
+
+.login-submit:hover .btn-icon { transform: translateX(4px); }
+
+.login-switch {
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.login-switch button {
+  background: none;
+  border: none;
+  color: var(--orange);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.3rem;
+  transition: opacity 0.2s;
+}
+
+.login-switch button:hover { opacity: 0.7; }
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .login-container {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .login-panel--left {
+    padding: 8rem 2rem 3rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    min-height: auto;
+  }
+
+  .login-panel--right {
+    padding: 3rem 2rem 4rem;
+  }
+
+  .login-panel__title { font-size: 3.5rem; }
+}
+
+@media (max-width: 480px) {
+  .login-panel--left { padding: 7rem 1.5rem 2.5rem; }
+  .login-panel--right { padding: 2.5rem 1.5rem 3rem; }
+  .login-panel__stats { gap: 1rem; padding: 1.25rem; }
+  .login-stat__num { font-size: 1.6rem; }
+}

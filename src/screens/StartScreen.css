@@ -1,0 +1,810 @@
+/* src/screens/StartScreen.css — Atlas Basketball Dashboard */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+
+.sd-root {
+  --orange: #FF5A1F;
+  --teal:   #00D4AA;
+  --purple: #667eea;
+  --gold:   #f5c842;
+  --white:  #F5F0E8;
+  --muted:  #888;
+  --border: rgba(255,255,255,0.07);
+  --bg:     #0a0a0a;
+  --bg-2:   #111111;
+  --bg-3:   #161616;
+
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ── Loading ─────────────────────────────────────────────────────────────── */
+.sd-loading {
+  min-height: 100vh;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.sd-loading-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  letter-spacing: 0.15em;
+  color: #F5F0E8;
+  opacity: 0.4;
+}
+
+.sd-loading-spinner {
+  width: 32px; height: 32px;
+  border: 2px solid rgba(255,90,31,0.2);
+  border-top-color: #FF5A1F;
+  border-radius: 50%;
+  animation: sdSpin 0.7s linear infinite;
+}
+
+@keyframes sdSpin { to { transform: rotate(360deg); } }
+
+/* ── Background ─────────────────────────────────────────────────────────── */
+.sd-bg {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+}
+
+.sd-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(140px);
+}
+
+.sd-glow--1 {
+  width: 600px; height: 600px;
+  background: var(--orange);
+  opacity: 0.05;
+  top: -200px; right: -200px;
+  animation: sdGlow 8s ease-in-out infinite alternate;
+}
+
+.sd-glow--2 {
+  width: 400px; height: 400px;
+  background: var(--teal);
+  opacity: 0.04;
+  bottom: -100px; left: -100px;
+  animation: sdGlow 11s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes sdGlow {
+  from { transform: scale(1);    opacity: 0.04; }
+  to   { transform: scale(1.15); opacity: 0.08; }
+}
+
+.sd-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* ── Top bar ─────────────────────────────────────────────────────────────── */
+.sd-topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  background: rgba(10,10,10,0.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+.sd-topbar__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sd-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.7rem;
+  letter-spacing: 0.1em;
+  color: var(--white);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.sd-logo:hover { color: var(--orange); }
+
+.sd-topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sd-tier-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255,90,31,0.1);
+  border: 1px solid rgba(255,90,31,0.25);
+  border-radius: 100px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.sd-tier-icon { font-size: 0.85rem !important; }
+
+.sd-avatar {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), var(--teal));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.sd-signout {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  padding: 0.4rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.sd-signout:hover {
+  color: var(--white);
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+}
+
+.sd-signout .MuiSvgIcon-root { font-size: 1.1rem !important; }
+
+/* ── Main ────────────────────────────────────────────────────────────────── */
+.sd-main {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 5rem 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+/* ── Welcome ─────────────────────────────────────────────────────────────── */
+.sd-welcome {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2.5rem;
+  align-items: start;
+  padding: 2.5rem;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+  animation: sdFadeUp 0.5s ease-out both;
+}
+
+.sd-welcome::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--orange), var(--teal));
+}
+
+@keyframes sdFadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.sd-welcome__date {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.sd-welcome__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  margin: 0 0 0.75rem;
+}
+
+.sd-accent { color: var(--orange); }
+
+.sd-welcome__sub {
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.sd-welcome__sub strong { color: var(--white); }
+
+/* Week tracker */
+.sd-week-tracker {
+  min-width: 280px;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  flex-shrink: 0;
+}
+
+.sd-week-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.sd-week-days {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.sd-week-day {
+  flex: 1;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+  gap: 2px;
+}
+
+.sd-week-day__letter {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sd-week-day__num {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.2);
+}
+
+.sd-week-day--done {
+  background: rgba(0,212,170,0.1);
+  border-color: rgba(0,212,170,0.3);
+}
+
+.sd-week-day--done .sd-week-day__letter { color: var(--teal); }
+
+.sd-week-day--active {
+  background: rgba(255,90,31,0.12);
+  border-color: rgba(255,90,31,0.5);
+  box-shadow: 0 0 0 2px rgba(255,90,31,0.1);
+}
+
+.sd-week-day--active .sd-week-day__letter { color: var(--orange); }
+
+.sd-week-day__check {
+  font-size: 0.75rem !important;
+  color: var(--teal) !important;
+}
+
+.sd-week-progress {
+  height: 2px;
+  background: var(--border);
+  border-radius: 100px;
+  overflow: hidden;
+  margin-bottom: 0.6rem;
+}
+
+.sd-week-progress__bar {
+  height: 100%;
+  background: linear-gradient(to right, var(--orange), var(--teal));
+  border-radius: 100px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sd-week-unlock {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.sd-unlock-icon {
+  font-size: 0.85rem !important;
+  flex-shrink: 0;
+  color: var(--muted) !important;
+}
+
+.sd-unlock-icon--open { color: var(--gold) !important; }
+
+/* ── Section ─────────────────────────────────────────────────────────────── */
+.sd-section {
+  animation: sdFadeUp 0.5s ease-out 0.1s both;
+}
+
+.sd-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.sd-section__title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.sd-section__icon {
+  font-size: 1.1rem !important;
+  color: var(--orange) !important;
+}
+
+.sd-section__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+  margin: 0;
+  color: var(--white);
+}
+
+.sd-section__meta {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ── Workout list ────────────────────────────────────────────────────────── */
+.sd-workout-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.sd-workout {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: border-color 0.2s, background 0.2s;
+  opacity: 0.55;
+}
+
+.sd-workout:hover { opacity: 0.85; }
+
+.sd-workout--active {
+  opacity: 1;
+  border-color: rgba(255,90,31,0.4);
+  background: rgba(255,90,31,0.05);
+}
+
+.sd-workout--done {
+  opacity: 0.75;
+  background: rgba(0,212,170,0.04);
+  border-color: rgba(0,212,170,0.2);
+}
+
+.sd-workout__check {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.sd-day-icon             { font-size: 1.2rem !important; }
+.sd-day-icon--done       { color: var(--teal)                   !important; }
+.sd-day-icon--active     { color: var(--orange)                 !important; }
+.sd-day-icon--upcoming   { color: rgba(255,255,255,0.12)        !important; }
+
+.sd-workout__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.sd-workout__label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sd-workout__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sd-workout__cat {
+  font-size: 0.7rem;
+  color: var(--orange);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.sd-workout__dur {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.sd-workout__btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.45rem 0.85rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.sd-workout--active .sd-workout__btn {
+  background: var(--orange);
+  color: #fff;
+  border-color: var(--orange);
+}
+
+.sd-workout__btn:hover {
+  color: var(--white);
+  border-color: rgba(255,255,255,0.3);
+}
+
+.sd-workout--active .sd-workout__btn:hover {
+  background: #ff7340;
+  border-color: #ff7340;
+}
+
+.sd-workout__arrow { font-size: 0.85rem !important; }
+
+.sd-unlock-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.1rem;
+  background: rgba(245,200,66,0.05);
+  border: 1px solid rgba(245,200,66,0.15);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: var(--gold);
+  opacity: 0.85;
+}
+
+.sd-hint-icon { font-size: 0.95rem !important; flex-shrink: 0; }
+
+/* ── Stats row ───────────────────────────────────────────────────────────── */
+.sd-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  animation: sdFadeUp 0.5s ease-out 0.2s both;
+}
+
+.sd-stat-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.sd-stat-card:hover {
+  border-color: rgba(255,255,255,0.12);
+  transform: translateY(-2px);
+}
+
+.sd-stat-card__icon { font-size: 1.4rem !important; margin-bottom: 0.25rem; }
+
+.sd-stat-card__num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--white);
+}
+
+.sd-stat-card__unit {
+  font-size: 1.5rem;
+}
+
+.sd-stat-card__label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* ── Ambassador spotlight ────────────────────────────────────────────────── */
+.sd-ambassador {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  animation: sdFadeUp 0.5s ease-out 0.3s both;
+}
+
+.sd-ambassador__inner {
+  padding: 2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.sd-ambassador::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--orange), transparent);
+}
+
+.sd-ambassador__text { max-width: 480px; }
+
+.sd-ambassador__eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.sd-ambassador__name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  letter-spacing: 0.04em;
+  margin: 0 0 0.3rem;
+  line-height: 1;
+}
+
+.sd-ambassador__team {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 1rem;
+}
+
+.sd-ambassador__quote {
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--muted);
+  border-left: 2px solid rgba(255,90,31,0.5);
+  padding-left: 1rem;
+  margin: 0 0 1.25rem;
+  line-height: 1.6;
+}
+
+.sd-amb-tier-badge {
+  display: inline-block;
+  border: 1px solid rgba(255,90,31,0.4);
+  border-radius: 100px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.sd-ambassador__number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(6rem, 12vw, 11rem);
+  color: rgba(255,90,31,0.07);
+  line-height: 1;
+  pointer-events: none;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .sd-welcome {
+    grid-template-columns: 1fr;
+  }
+
+  .sd-week-tracker {
+    min-width: unset;
+  }
+
+  .sd-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .sd-main { padding: 4.5rem 1rem 3rem; gap: 1.5rem; }
+
+  .sd-welcome { padding: 1.5rem; }
+
+  .sd-topbar__inner { padding: 0 1rem; }
+
+  .sd-stats-row { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+
+  .sd-ambassador__inner { padding: 1.5rem; }
+
+  .sd-ambassador__number { font-size: 5rem; }
+
+  .sd-workout { padding: 0.85rem 1rem; }
+
+  .sd-workout__btn { display: none; }
+}
+/* ─── ADAUGĂ ACESTE STILURI LA SFÂRȘITUL StartScreen.css ──────────────────────── */
+
+/* Upgrade success banner */
+.sd-upgrade-banner {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #00D4AA;
+  color: #000;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 200;
+  animation: sd-banner-in 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0,212,170,0.3);
+}
+
+@keyframes sd-banner-in {
+  from { opacity: 0; transform: translate(-50%, -12px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.sd-upgrade-banner__icon {
+  font-size: 1.1rem !important;
+}
+
+/* Tier badge — override to use dynamic color */
+.sd-tier-badge {
+  border: 1px solid;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 0.04em;
+}
+
+/* Avatar as button with settings icon */
+.sd-avatar {
+  position: relative;
+  cursor: pointer;
+  background: rgba(255,90,31,0.15);
+  border: 1px solid rgba(255,90,31,0.35);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: #FF5A1F;
+  transition: all 0.2s;
+  overflow: hidden;
+}
+
+.sd-avatar:hover {
+  background: rgba(255,90,31,0.25);
+  border-color: rgba(255,90,31,0.6);
+}
+
+.sd-avatar__settings-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(8,8,8,0.85);
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 1rem !important;
+  color: #FF5A1F;
+  border-radius: 50%;
+}
+
+.sd-avatar:hover .sd-avatar__settings-icon {
+  opacity: 1;
+}
+
+/* Inline upgrade link in welcome text */
+.sd-upgrade-link {
+  background: none;
+  border: none;
+  color: #FF5A1F;
+  font-family: 'DM Sans', sans-serif;
+  font-size: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-decoration-color: rgba(255,90,31,0.4);
+  transition: text-decoration-color 0.2s;
+}
+
+.sd-upgrade-link:hover {
+  text-decoration-color: #FF5A1F;
+}
+
+/* Locked day in week tracker (free tier) */
+.sd-week-day--locked {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.sd-week-day--locked:hover {
+  border-color: transparent !important;
+}
+
+.sd-week-day__lock {
+  font-size: 0.7rem !important;
+  color: rgba(255,255,255,0.3);
+}

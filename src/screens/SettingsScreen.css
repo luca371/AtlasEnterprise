@@ -1,0 +1,900 @@
+/* src/screens/SettingsScreen.css */
+
+/* ─── Root ──────────────────────────────────────────────────────────────────── */
+.st-root {
+  min-height: 100vh;
+  background: #080808;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  position: relative;
+}
+
+/* ─── Background ─────────────────────────────────────────────────────────────── */
+.st-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.st-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.18;
+}
+
+.st-glow--1 {
+  width: 600px;
+  height: 600px;
+  background: #FF5A1F;
+  top: -150px;
+  right: -200px;
+}
+
+.st-glow--2 {
+  width: 500px;
+  height: 500px;
+  background: #667eea;
+  bottom: 100px;
+  left: -150px;
+}
+
+.st-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ─── Loading ─────────────────────────────────────────────────────────────────── */
+.st-loading {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #080808;
+  gap: 24px;
+}
+
+.st-loading-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  letter-spacing: 0.15em;
+  color: #FF5A1F;
+}
+
+.st-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 2px solid rgba(255,255,255,0.1);
+  border-top-color: #FF5A1F;
+  border-radius: 50%;
+  animation: st-spin 0.8s linear infinite;
+}
+
+@keyframes st-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Header ──────────────────────────────────────────────────────────────────── */
+.st-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8,8,8,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.st-header__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.st-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 8px 0;
+  transition: color 0.2s;
+}
+
+.st-back:hover {
+  color: #fff;
+}
+
+.st-back__icon {
+  font-size: 1.1rem !important;
+}
+
+.st-header__logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.15em;
+  color: #FF5A1F;
+}
+
+.st-header__spacer {
+  width: 80px;
+}
+
+/* ─── Main ────────────────────────────────────────────────────────────────────── */
+.st-main {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.st-page-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  letter-spacing: 0.08em;
+  color: #fff;
+  margin: 0 0 40px;
+}
+
+/* ─── Section ─────────────────────────────────────────────────────────────────── */
+.st-section {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.st-section__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.st-section__icon {
+  font-size: 1.4rem !important;
+}
+
+.st-section__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.85);
+  margin: 0;
+}
+
+/* ─── Current Plan ────────────────────────────────────────────────────────────── */
+.st-plan-current {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: color-mix(in srgb, var(--plan-color) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--plan-color) 25%, transparent);
+  border-radius: 12px;
+  padding: 20px 24px;
+  flex-wrap: wrap;
+}
+
+.st-plan-current__left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.st-plan-current__label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.st-plan-current__name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.1em;
+}
+
+.st-plan-current__price {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.55);
+}
+
+.st-change-plan-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 10px 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.st-change-plan-btn:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.st-change-plan-btn__icon {
+  font-size: 1rem !important;
+}
+
+/* ─── Free upsell banner ──────────────────────────────────────────────────────── */
+.st-free-upsell {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255,90,31,0.06);
+  border: 1px solid rgba(255,90,31,0.2);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.st-free-upsell__icon {
+  color: #FF5A1F;
+  font-size: 1.4rem !important;
+  flex-shrink: 0;
+}
+
+.st-free-upsell > div {
+  flex: 1;
+}
+
+.st-free-upsell strong {
+  display: block;
+  color: #fff;
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+}
+
+.st-free-upsell p {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.82rem;
+  margin: 0;
+}
+
+.st-free-upsell__btn {
+  background: #FF5A1F;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 8px 18px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.st-free-upsell__btn:hover {
+  opacity: 0.88;
+}
+
+/* ─── Avatar Row ──────────────────────────────────────────────────────────────── */
+.st-avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.st-avatar-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.st-avatar-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.st-avatar-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.st-avatar-email {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.45);
+}
+
+/* ─── Form ────────────────────────────────────────────────────────────────────── */
+.st-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.st-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.st-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.st-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.st-label-optional {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.3);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.st-input {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.st-input:focus {
+  border-color: #FF5A1F;
+}
+
+.st-input--prefixed {
+  padding-left: 38px;
+}
+
+.st-select {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.st-select:focus {
+  border-color: #FF5A1F;
+}
+
+.st-select option {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.st-input-prefix-wrap {
+  position: relative;
+}
+
+.st-input-prefix {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.4);
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+/* ─── Choice group (position) ─────────────────────────────────────────────────── */
+.st-choice-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.st-choice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 10px 18px;
+  color: rgba(255,255,255,0.6);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.st-choice:hover {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+
+.st-choice--active {
+  background: rgba(255,90,31,0.12);
+  border-color: rgba(255,90,31,0.5);
+  color: #FF5A1F;
+}
+
+.st-choice-icon {
+  font-size: 1rem !important;
+}
+
+/* ─── Level group ─────────────────────────────────────────────────────────────── */
+.st-level-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.st-level {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 10px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.st-level:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.st-level--active {
+  background: rgba(0,212,170,0.1);
+  border-color: rgba(0,212,170,0.4);
+}
+
+.st-level__num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.4);
+}
+
+.st-level--active .st-level__num {
+  color: #00D4AA;
+}
+
+.st-level__name {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+}
+
+.st-level--active .st-level__name {
+  color: rgba(0,212,170,0.85);
+}
+
+/* ─── Form error ──────────────────────────────────────────────────────────────── */
+.st-form-error {
+  background: rgba(255,60,60,0.1);
+  border: 1px solid rgba(255,60,60,0.25);
+  border-radius: 8px;
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  padding: 12px 16px;
+}
+
+/* ─── Save button ─────────────────────────────────────────────────────────────── */
+.st-save-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #FF5A1F;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+.st-save-btn:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.st-save-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.st-save-btn--success {
+  background: #00D4AA;
+}
+
+.st-save-btn__icon {
+  font-size: 1.1rem !important;
+}
+
+/* ─── Spinner ─────────────────────────────────────────────────────────────────── */
+.st-spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: st-spin 0.7s linear infinite;
+}
+
+/* ─── PLAN POPUP ──────────────────────────────────────────────────────────────── */
+.st-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: st-fade-in 0.2s ease;
+}
+
+@keyframes st-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.st-popup {
+  background: #111111;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 36px;
+  max-width: 860px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: st-slide-up 0.25s ease;
+}
+
+@keyframes st-slide-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.st-popup__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.st-popup__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  letter-spacing: 0.08em;
+  color: #fff;
+  margin: 0 0 6px;
+}
+
+.st-popup__sub {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.45);
+  margin: 0;
+}
+
+.st-popup__close {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.st-popup__close:hover {
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+}
+
+.st-popup__error {
+  background: rgba(255,60,60,0.1);
+  border: 1px solid rgba(255,60,60,0.25);
+  border-radius: 8px;
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+/* ─── Plan card grid ──────────────────────────────────────────────────────────── */
+.st-popup__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+/* ─── Individual plan card ────────────────────────────────────────────────────── */
+.st-plan-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  transition: border-color 0.25s;
+}
+
+.st-plan-card--active {
+  background: color-mix(in srgb, var(--plan-color) 8%, transparent);
+  border-color: color-mix(in srgb, var(--plan-color) 50%, transparent);
+}
+
+.st-plan-card--popular {
+  border-color: rgba(255,90,31,0.35);
+}
+
+.st-plan-card__popular {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FF5A1F;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.st-plan-card__current {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--plan-color);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.st-plan-card__name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.08em;
+  margin: 0 0 8px;
+}
+
+.st-plan-card__pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.st-plan-card__currency {
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.6);
+}
+
+.st-plan-card__amount {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+.st-plan-card__period {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.4);
+  margin-left: 2px;
+}
+
+.st-plan-card__price-free {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: #fff;
+}
+
+.st-plan-card__tagline {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  margin: 0 0 16px;
+}
+
+.st-plan-card__perks {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.st-plan-card__perks li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.4;
+}
+
+.st-plan-card__check {
+  font-size: 0.85rem !important;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ─── Plan card button ────────────────────────────────────────────────────────── */
+.st-plan-card__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.7);
+}
+
+.st-plan-card__btn:disabled {
+  cursor: not-allowed;
+}
+
+.st-plan-card__btn--current {
+  border-color: color-mix(in srgb, var(--plan-color) 50%, transparent);
+  color: var(--plan-color);
+  background: color-mix(in srgb, var(--plan-color) 8%, transparent);
+}
+
+.st-plan-card__btn--upgrade {
+  background: var(--btn-color);
+  border-color: var(--btn-color);
+  color: #fff;
+}
+
+.st-plan-card__btn--upgrade:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.st-plan-card__btn:hover:not(:disabled):not(.st-plan-card__btn--current):not(.st-plan-card__btn--upgrade) {
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+}
+
+.st-plan-card__btn-icon {
+  font-size: 0.9rem !important;
+}
+
+.st-popup__note {
+  text-align: center;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.3);
+  margin: 20px 0 0;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────────────── */
+@media (max-width: 840px) {
+  .st-popup__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .st-section {
+    padding: 20px 16px;
+  }
+
+  .st-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .st-level-group {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .st-popup {
+    padding: 24px 18px;
+  }
+
+  .st-popup__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .st-plan-card {
+    padding: 18px 14px;
+  }
+
+  .st-plan-current {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .st-change-plan-btn {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 420px) {
+  .st-popup__grid {
+    grid-template-columns: 1fr;
+  }
+}
