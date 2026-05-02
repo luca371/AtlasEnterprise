@@ -17,6 +17,7 @@ import {
   Psychology,
   WorkspacePremium,
   BarChart,
+  MilitaryTech,
 } from '@mui/icons-material';
 import './Sidebar.css';
 
@@ -25,8 +26,9 @@ const NAV_ITEMS = [
   { label: "Today's Training", icon: <FitnessCenterOutlined />, path: '/today',     soon: true  },
   { label: 'Weekly Challenge', icon: <EmojiEventsOutlined />,   path: '/challenge', soon: false },
   { label: 'Basketball IQ',    icon: <Psychology />,            path: '/iq',        soon: false, pro: true },
-  { label: 'My Stats',         icon: <BarChart />,              path: '/player',    soon: false },
-  { label: 'Feed',             icon: <DynamicFeedOutlined />,   path: '/feed',      soon: false },
+  { label: 'My Stats',         icon: <BarChart />,              path: '/player',       soon: false },
+  { label: 'Leaderboard',      icon: <MilitaryTech />,          path: '/leaderboard',  soon: false },
+  { label: 'Feed',             icon: <DynamicFeedOutlined />,   path: '/feed',         soon: false },
   { label: 'Stars Feed',       icon: <AutoAwesomeOutlined />,   path: '/stars',     soon: true  },
 ];
 
@@ -82,7 +84,7 @@ const Sidebar = ({ userData, onSignOut }) => {
 
   // Active check — /player and /player/:userId both highlight "My Stats"
   const isActive = (path) => {
-    if (path === '/player') return location.pathname.startsWith('/player');
+    if (path === '/player') return location.pathname === '/player' || location.pathname.startsWith('/player/');
     return location.pathname === path;
   };
 

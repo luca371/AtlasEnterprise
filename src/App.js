@@ -11,6 +11,7 @@ import FeedScreen         from './screens/FeedScreen';
 import BasketballIQScreen from './screens/BasketballIQScreen';
 import ExperienceScreen   from './screens/ExperienceScreen';
 import PlayerScreen       from './screens/PlayerScreen';
+import LeaderboardScreen  from './screens/LeaderboardScreen';
 import './App.css';
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/experience"      element={<ExperienceScreen />} />
         <Route path="/player"          element={<PlayerScreen />} />
         <Route path="/player/:userId"  element={<PlayerScreen />} />
+        <Route path="/leaderboard"     element={<LeaderboardScreen />} />
         <Route path="*"                element={<LandingScreen />} />
       </Routes>
     </Router>

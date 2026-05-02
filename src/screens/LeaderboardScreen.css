@@ -1,0 +1,790 @@
+/* src/screens/LeaderboardScreen.css */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+/* ─── Root ─────────────────────────────────────────────────────────────────── */
+.lb-root {
+  min-height: 100vh;
+  background: #080808;
+  color: #F5F0E8;
+  font-family: 'DM Sans', sans-serif;
+  position: relative;
+}
+
+/* ─── Background ────────────────────────────────────────────────────────────── */
+.lb-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lb-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.09;
+}
+
+.lb-glow--1 {
+  width: 600px; height: 600px;
+  background: #FFD700;
+  top: -200px; right: -150px;
+}
+
+.lb-glow--2 {
+  width: 450px; height: 450px;
+  background: #FF5A1F;
+  bottom: 50px; left: -100px;
+}
+
+.lb-glow--3 {
+  width: 350px; height: 350px;
+  background: #667eea;
+  top: 40%; left: 30%;
+}
+
+.lb-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ─── Loading ──────────────────────────────────────────────────────────────── */
+.lb-loading {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #080808;
+  gap: 20px;
+}
+
+.lb-loading-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 0.15em;
+  color: #FFD700;
+}
+
+.lb-spinner {
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(255,255,255,0.1);
+  border-top-color: #FFD700;
+  border-radius: 50%;
+  animation: lb-spin 0.8s linear infinite;
+}
+
+.lb-spinner--sm {
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes lb-spin { to { transform: rotate(360deg); } }
+
+/* ─── Main ─────────────────────────────────────────────────────────────────── */
+.lb-main {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+/* ─── Page header ───────────────────────────────────────────────────────────── */
+.lb-page-header {
+  margin-bottom: 32px;
+}
+
+.lb-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #FFD700;
+  margin-bottom: 12px;
+}
+
+.lb-eyebrow-icon {
+  font-size: 0.9rem !important;
+}
+
+.lb-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 7vw, 5rem);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  margin: 0 0 12px;
+  background: linear-gradient(135deg, #F5F0E8 40%, #FFD700);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.lb-sub {
+  font-size: 0.85rem;
+  color: rgba(245,240,232,0.45);
+  line-height: 1.5;
+  max-width: 480px;
+}
+
+/* ─── Own rank banner ───────────────────────────────────────────────────────── */
+.lb-own-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, rgba(255,90,31,0.12), rgba(255,90,31,0.04));
+  border: 1px solid rgba(255,90,31,0.3);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.lb-own-banner__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.lb-own-banner__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  color: #080808;
+  flex-shrink: 0;
+}
+
+.lb-own-banner__name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.lb-own-banner__meta {
+  font-size: 0.75rem;
+  color: rgba(245,240,232,0.45);
+  margin-top: 2px;
+  display: flex;
+  gap: 4px;
+}
+
+.lb-own-banner__right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.lb-own-banner__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.lb-own-banner__val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: #F5F0E8;
+}
+
+.lb-own-banner__key {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.35);
+}
+
+.lb-own-banner__divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,0.1);
+}
+
+/* ─── Filters ──────────────────────────────────────────────────────────────── */
+.lb-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.lb-filters__label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.4);
+  margin-right: 4px;
+}
+
+/* Country dropdown */
+.lb-country-wrap {
+  position: relative;
+}
+
+.lb-filter-select {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: rgba(245,240,232,0.6);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+  min-width: 150px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.lb-filter-select--active {
+  border-color: rgba(255,90,31,0.5);
+  color: #F5F0E8;
+  background: rgba(255,90,31,0.06);
+}
+
+.lb-filter-select:hover {
+  border-color: rgba(255,255,255,0.2);
+  color: #F5F0E8;
+}
+
+.lb-country-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #161616;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  overflow-y: auto;
+  max-height: 240px;
+  min-width: 180px;
+  z-index: 100;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  animation: lb-drop-in 0.15s ease;
+}
+
+@keyframes lb-drop-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.lb-country-opt {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 9px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  color: rgba(245,240,232,0.6);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.lb-country-opt:hover {
+  background: rgba(255,255,255,0.05);
+  color: #F5F0E8;
+}
+
+.lb-country-opt--active {
+  color: #FF5A1F;
+  background: rgba(255,90,31,0.06);
+}
+
+/* Pills */
+.lb-pill-group {
+  display: flex;
+  gap: 6px;
+}
+
+.lb-pill {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 6px 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  color: rgba(245,240,232,0.55);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.lb-pill:hover {
+  background: rgba(255,255,255,0.08);
+  color: #F5F0E8;
+}
+
+.lb-pill--active {
+  background: rgba(255,90,31,0.15);
+  border-color: rgba(255,90,31,0.5);
+  color: #FF5A1F;
+}
+
+/* Clear */
+.lb-clear-btn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 6px 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  color: rgba(245,240,232,0.4);
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.lb-clear-btn:hover {
+  color: #F5F0E8;
+  border-color: rgba(255,255,255,0.25);
+}
+
+.lb-clear-btn--center {
+  margin: 16px auto 0;
+  display: block;
+}
+
+/* ─── Count row ─────────────────────────────────────────────────────────────── */
+.lb-count-row {
+  margin-bottom: 28px;
+}
+
+.lb-count {
+  font-size: 0.75rem;
+  color: rgba(245,240,232,0.35);
+  letter-spacing: 0.05em;
+}
+
+/* ─── Loading / empty ───────────────────────────────────────────────────────── */
+.lb-list-loading {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}
+
+.lb-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 56px 24px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  color: rgba(245,240,232,0.4);
+  font-size: 0.9rem;
+}
+
+.lb-empty-icon {
+  font-size: 2.5rem !important;
+  opacity: 0.25;
+}
+
+/* ─── Separator utility ─────────────────────────────────────────────────────── */
+.lb-sep {
+  color: rgba(245,240,232,0.2);
+  margin: 0 2px;
+}
+
+/* ─── Podium ────────────────────────────────────────────────────────────────── */
+.lb-podium {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.lb-podium-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 18px;
+  padding: 24px 18px 20px;
+  flex: 1;
+  max-width: 240px;
+  transition: border-color 0.2s;
+}
+
+/* 1st place is taller / more prominent */
+.lb-podium-card--1 {
+  padding-top: 32px;
+  padding-bottom: 28px;
+  border-color: rgba(255,215,0,0.25);
+  background: rgba(255,215,0,0.04);
+}
+
+.lb-podium-card--2 {
+  border-color: rgba(192,192,192,0.2);
+  background: rgba(192,192,192,0.03);
+}
+
+.lb-podium-card--3 {
+  border-color: rgba(205,127,50,0.2);
+  background: rgba(205,127,50,0.03);
+}
+
+.lb-podium-card--own {
+  outline: 2px solid rgba(255,90,31,0.5);
+  outline-offset: 2px;
+}
+
+.lb-you-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #FF5A1F;
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.lb-podium-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  color: #080808;
+}
+
+.lb-podium-card--1 .lb-podium-avatar {
+  width: 68px;
+  height: 68px;
+  font-size: 1.9rem;
+}
+
+.lb-podium-medal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+}
+
+.lb-podium-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.lb-podium-card--1 .lb-podium-name {
+  font-size: 1rem;
+}
+
+.lb-podium-meta {
+  font-size: 0.72rem;
+  color: rgba(245,240,232,0.4);
+  text-align: center;
+  display: flex;
+  gap: 2px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.lb-podium-xp {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.lb-podium-card--1 .lb-podium-xp {
+  font-size: 2rem;
+}
+
+.lb-podium-xp__unit {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-left: 3px;
+}
+
+.lb-podium-rank-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lb-podium-tier {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 2px 6px;
+}
+
+/* ─── Full ranked list ──────────────────────────────────────────────────────── */
+.lb-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 40px;
+}
+
+.lb-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 12px 16px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.lb-row:hover {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.1);
+}
+
+.lb-row--own {
+  background: rgba(255,90,31,0.07);
+  border-color: rgba(255,90,31,0.35);
+  box-shadow: 0 0 20px rgba(255,90,31,0.08);
+}
+
+.lb-row--own:hover {
+  background: rgba(255,90,31,0.1);
+  border-color: rgba(255,90,31,0.5);
+}
+
+.lb-row__rank {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  color: rgba(245,240,232,0.3);
+  min-width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.lb-row__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  color: #080808;
+  flex-shrink: 0;
+}
+
+.lb-row__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.lb-row__name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lb-row__you {
+  background: #FF5A1F;
+  color: #fff;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 2px 5px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.lb-row__meta {
+  font-size: 0.72rem;
+  color: rgba(245,240,232,0.38);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  gap: 2px;
+}
+
+.lb-row__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.lb-row__xp {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  color: #F5F0E8;
+  line-height: 1;
+}
+
+.lb-row__xp-unit {
+  font-size: 0.65rem;
+  opacity: 0.6;
+  margin-left: 2px;
+}
+
+.lb-row__title {
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lb-row__tier {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 2px 5px;
+  flex-shrink: 0;
+}
+
+/* ─── XP key ────────────────────────────────────────────────────────────────── */
+.lb-xp-key {
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-top: 8px;
+}
+
+.lb-xp-key__title {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.35);
+  margin-bottom: 14px;
+}
+
+.lb-xp-key__grid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.lb-xp-key__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lb-xp-key__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.lb-xp-key__name {
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.lb-xp-key__range {
+  font-size: 0.72rem;
+  color: rgba(245,240,232,0.35);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .lb-main {
+    padding: 24px 16px 60px;
+  }
+
+  .lb-podium {
+    gap: 8px;
+  }
+
+  .lb-podium-card {
+    padding: 16px 10px 14px;
+  }
+
+  .lb-podium-name {
+    font-size: 0.78rem;
+  }
+
+  .lb-podium-meta {
+    display: none;
+  }
+
+  .lb-own-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lb-own-banner__right {
+    gap: 14px;
+  }
+
+  .lb-filters {
+    gap: 7px;
+  }
+
+  .lb-pill-group {
+    gap: 5px;
+  }
+
+  .lb-pill {
+    font-size: 0.73rem;
+    padding: 5px 10px;
+  }
+
+  .lb-xp-key__grid {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .lb-row__tier { display: none; }
+  .lb-podium-tier { display: none; }
+}
