@@ -14,7 +14,6 @@ import {
   Public,
   FilterList,
   WorkspacePremium,
-  Person,
   KeyboardArrowDown,
 } from '@mui/icons-material';
 import Sidebar from '../components/Sidebar';
