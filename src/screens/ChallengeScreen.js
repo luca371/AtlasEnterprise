@@ -415,7 +415,7 @@ const ChallengeScreen = () => {
             ) : submissions.length === 0 ? (
               <div className="ch-feed-empty">
                 <EmojiEvents className="ch-feed-empty__icon" />
-                <p>No submissions yet. Be the first to upload your attempt!</p>
+                <p>No submissions yet. Be the first to upload your attempt to Atlas!</p>
               </div>
             ) : (
               <div className="ch-feed-grid">
