@@ -27,6 +27,8 @@ import {
   AccessTime,
   Person,
   PlayArrow,
+  WorkspacePremium,
+  MilitaryTech,
 } from '@mui/icons-material';
 import Sidebar from '../components/Sidebar';
 import './ChallengeScreen.css';
@@ -281,6 +283,92 @@ const ChallengeScreen = () => {
               </div>
             )}
           </div>
+
+          {/* ── Podium ──────────────────────────────────────────────────── */}
+          {(() => {
+            const top3 = [...submissions]
+              .sort((a, b) => (b.likedBy?.length || 0) - (a.likedBy?.length || 0))
+              .slice(0, 3);
+
+            const PRIZES = [
+              { rank: 1, prize: 'NBA subscription — 1 month',        color: '#667eea', bg: 'rgba(102,126,234,0.08)', border: 'rgba(102,126,234,0.25)' },
+              { rank: 2, prize: 'EuroLeague subscription — 1 month', color: '#FF5A1F', bg: 'rgba(255,90,31,0.08)',   border: 'rgba(255,90,31,0.25)'   },
+              { rank: 3, prize: 'Pro subscription — 1 month',        color: '#00D4AA', bg: 'rgba(0,212,170,0.08)',   border: 'rgba(0,212,170,0.25)'   },
+            ];
+
+            // podium order: 2nd left, 1st center, 3rd right
+            const podiumOrder = [
+              { pos: 1, entry: top3[1], prize: PRIZES[1] },
+              { pos: 0, entry: top3[0], prize: PRIZES[0] },
+              { pos: 2, entry: top3[2], prize: PRIZES[2] },
+            ];
+
+            return (
+              <section className="ch-podium-section">
+                <div className="ch-section-label">Leaderboard</div>
+                <h2 className="ch-podium-title">TOP PERFORMERS</h2>
+
+                <div className="ch-podium-stage">
+                  {podiumOrder.map(({ pos, entry, prize }) => {
+                    const rank = pos + 1;
+                    const isEmpty = !entry;
+                    const likes = entry?.likedBy?.length || 0;
+                    const name  = entry?.userName || '—';
+                    const isFirst = rank === 1;
+
+                    return (
+                      <div
+                        key={rank}
+                        className={`ch-podium-slot ch-podium-slot--${rank} ${isEmpty ? 'ch-podium-slot--empty' : ''}`}
+                      >
+                        {/* Avatar */}
+                        <div className="ch-podium-avatar" style={{ borderColor: prize.color }}>
+                          {isEmpty
+                            ? <span className="ch-podium-avatar__q">?</span>
+                            : <span className="ch-podium-avatar__letter" style={{ color: prize.color }}>
+                                {name.charAt(0).toUpperCase()}
+                              </span>
+                          }
+                          {isFirst && !isEmpty && (
+                            <MilitaryTech className="ch-podium-crown" />
+                          )}
+                        </div>
+
+                        {/* Name + likes */}
+                        <div className="ch-podium-name">{isEmpty ? 'TBD' : name}</div>
+                        {!isEmpty && (
+                          <div className="ch-podium-likes" style={{ color: prize.color }}>
+                            <Favorite style={{ fontSize: '0.7rem' }} />
+                            {likes}
+                          </div>
+                        )}
+
+                        {/* Block */}
+                        <div className="ch-podium-block" style={{ background: prize.bg, borderColor: prize.border }}>
+                          <span className="ch-podium-rank" style={{ color: prize.color }}>
+                            {rank === 1 ? '🥇' : rank === 2 ? '🥈' : '🥉'}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Prizes row */}
+                <div className="ch-prizes-row">
+                  {PRIZES.map(({ rank, prize, color, bg, border }) => (
+                    <div key={rank} className="ch-prize-card" style={{ background: bg, borderColor: border }}>
+                      <WorkspacePremium className="ch-prize-card__icon" style={{ color }} />
+                      <div className="ch-prize-card__rank" style={{ color }}>
+                        {rank === 1 ? '1st Place' : rank === 2 ? '2nd Place' : '3rd Place'}
+                      </div>
+                      <div className="ch-prize-card__desc">{prize}</div>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            );
+          })()}
 
           {/* ── Challenge video (set by admin in Firebase) ──────────────────── */}
           {challenge?.videoUrl ? (

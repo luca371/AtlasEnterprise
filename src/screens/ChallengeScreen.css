@@ -152,6 +152,151 @@
   margin-bottom: 14px;
 }
 
+/* ─── Podium section ─────────────────────────────────────────────────────────── */
+.ch-podium-section {
+  margin-bottom: 48px;
+}
+
+.ch-podium-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.06em;
+  color: #fff;
+  margin: 0 0 28px;
+}
+
+.ch-podium-stage {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+/* Each slot */
+.ch-podium-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 180px;
+}
+
+.ch-podium-slot--empty { opacity: 0.45; }
+
+/* Avatar circle */
+.ch-podium-avatar {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid;
+  background: rgba(255,255,255,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ch-podium-slot--1 .ch-podium-avatar { width: 64px; height: 64px; }
+
+.ch-podium-avatar__letter,
+.ch-podium-avatar__q {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1;
+}
+
+.ch-podium-slot--1 .ch-podium-avatar__letter,
+.ch-podium-slot--1 .ch-podium-avatar__q {
+  font-size: 1.6rem;
+}
+
+.ch-podium-crown {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.1rem !important;
+  color: #f5c842;
+  filter: drop-shadow(0 0 6px rgba(245,200,66,0.6));
+}
+
+.ch-podium-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 130px;
+}
+
+.ch-podium-slot--1 .ch-podium-name { font-size: 0.9rem; }
+
+.ch-podium-likes {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Podium blocks */
+.ch-podium-block {
+  width: 100%;
+  border-radius: 10px 10px 6px 6px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+}
+
+/* Heights: 2nd shorter, 1st tallest, 3rd shortest */
+.ch-podium-slot--2 .ch-podium-block { height: 72px; }
+.ch-podium-slot--1 .ch-podium-block { height: 100px; }
+.ch-podium-slot--3 .ch-podium-block { height: 52px; }
+
+.ch-podium-rank {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+/* ─── Prizes row ─────────────────────────────────────────────────────────────── */
+.ch-prizes-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.ch-prize-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 12px;
+  border-radius: 12px;
+  border: 1px solid;
+  text-align: center;
+}
+
+.ch-prize-card__icon { font-size: 1.3rem !important; }
+
+.ch-prize-card__rank {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+}
+
+.ch-prize-card__desc {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.4;
+}
+
 /* ─── Challenge video ────────────────────────────────────────────────────────── */
 .ch-video-section {
   margin-bottom: 40px;
@@ -615,5 +760,20 @@
     gap: 10px;
   }
 
-  /* Cards stay 2 columns — same as desktop */
+  .ch-prizes-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .ch-prize-card {
+    flex-direction: row;
+    text-align: left;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+
+  .ch-prize-card__desc { font-size: 0.82rem; }
+
+  .ch-podium-stage { gap: 8px; }
+  .ch-podium-slot { max-width: 120px; }
 }

@@ -21,7 +21,7 @@ const NAV_ITEMS = [
   { label: 'Home',             icon: <HomeOutlined />,          path: '/start',     soon: false },
   { label: "Today's Training", icon: <FitnessCenterOutlined />, path: '/today',     soon: true  },
   { label: 'Weekly Challenge', icon: <EmojiEventsOutlined />,   path: '/challenge', soon: false },
-  { label: 'Feed',             icon: <DynamicFeedOutlined />,   path: '/feed',      soon: true  },
+  { label: 'Feed',             icon: <DynamicFeedOutlined />,   path: '/feed',      soon: false },
   { label: 'Stars Feed',       icon: <AutoAwesomeOutlined />,   path: '/stars',     soon: true  },
 ];
 

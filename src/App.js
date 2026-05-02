@@ -7,6 +7,7 @@ import SignupScreen    from './screens/SignupScreen';
 import StartScreen     from './screens/StartScreen';
 import SettingsScreen  from './screens/SettingsScreen';
 import ChallengeScreen from './screens/ChallengeScreen';
+import FeedScreen      from './screens/FeedScreen';
 import './App.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/start"     element={<StartScreen />} />
         <Route path="/settings"  element={<SettingsScreen />} />
         <Route path="/challenge" element={<ChallengeScreen />} />
+        <Route path="/feed"      element={<FeedScreen />} />
         <Route path="*"          element={<LandingScreen />} />
       </Routes>
     </Router>
