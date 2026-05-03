@@ -2,87 +2,53 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
-  HomeOutlined,
-  FitnessCenterOutlined,
-  EmojiEventsOutlined,
-  DynamicFeedOutlined,
-  AutoAwesomeOutlined,
-  SettingsOutlined,
-  LogoutOutlined,
-  SportsBasketball,
-  Menu as MenuIcon,
-  Close,
-  ChevronLeft,
-  ChevronRight,
-  Psychology,
-  WorkspacePremium,
-  BarChart,
-  MilitaryTech,
+  HomeOutlined, FitnessCenterOutlined, EmojiEventsOutlined,
+  DynamicFeedOutlined, AutoAwesomeOutlined, SettingsOutlined,
+  LogoutOutlined, SportsBasketball, Menu as MenuIcon, Close,
+  ChevronLeft, ChevronRight, Psychology, WorkspacePremium,
+  BarChart, MilitaryTech,
 } from '@mui/icons-material';
 import './Sidebar.css';
 
 const NAV_ITEMS = [
-  { label: 'Home',             icon: <HomeOutlined />,          path: '/start',     soon: false },
-  { label: "Today's Training", icon: <FitnessCenterOutlined />, path: '/today',     soon: true  },
-  { label: 'Weekly Challenge', icon: <EmojiEventsOutlined />,   path: '/challenge', soon: false },
-  { label: 'Basketball IQ',    icon: <Psychology />,            path: '/iq',        soon: false, pro: true },
-  { label: 'My Stats',         icon: <BarChart />,              path: '/player',       soon: false },
-  { label: 'Leaderboard',      icon: <MilitaryTech />,          path: '/leaderboard',  soon: false },
-  { label: 'Feed',             icon: <DynamicFeedOutlined />,   path: '/feed',         soon: false },
-  { label: 'Stars Feed',       icon: <AutoAwesomeOutlined />,   path: '/stars',     soon: true  },
+  { label: 'Home',             icon: <HomeOutlined />,          path: '/start',       soon: false },
+  { label: "Today's Training", icon: <FitnessCenterOutlined />, path: '/today',       soon: false },
+  { label: 'Weekly Challenge', icon: <EmojiEventsOutlined />,   path: '/challenge',   soon: false },
+  { label: 'Basketball IQ',    icon: <Psychology />,            path: '/iq',          soon: false, pro: true },
+  { label: 'My Stats',         icon: <BarChart />,              path: '/player',      soon: false },
+  { label: 'Leaderboard',      icon: <MilitaryTech />,          path: '/leaderboard', soon: false },
+  { label: 'Feed',             icon: <DynamicFeedOutlined />,   path: '/feed',        soon: false },
+  { label: 'Stars Feed',       icon: <AutoAwesomeOutlined />,   path: '/stars',       soon: true  },
 ];
 
 const TIER_COLORS = {
-  free:       '#718096',
-  pro:        '#00D4AA',
-  euroleague: '#FF5A1F',
-  nba:        '#667eea',
+  free: '#718096', pro: '#00D4AA', euroleague: '#FF5A1F', nba: '#667eea',
 };
-
 const TIER_LABELS = {
-  free:       'Free',
-  pro:        'Pro',
-  euroleague: 'EuroLeague',
-  nba:        'NBA',
+  free: 'Free', pro: 'Pro', euroleague: 'EuroLeague', nba: 'NBA',
 };
 
 const Sidebar = ({ userData, onSignOut }) => {
   const navigate  = useNavigate();
   const location  = useLocation();
-  const [open, setOpen]           = useState(false);   // mobile drawer
-  const [collapsed, setCollapsed] = useState(() => {
-    return localStorage.getItem('sb_collapsed') === 'true';
-  });
+  const [open, setOpen]           = useState(false);
+  const [collapsed, setCollapsed] = useState(() => localStorage.getItem('sb_collapsed') === 'true');
 
-  const tier       = userData?.tier || 'free';
-  const firstName  = userData?.firstName || '';
-  const lastName   = userData?.lastName  || '';
-  const tierColor  = TIER_COLORS[tier]  || TIER_COLORS.free;
-  const tierLabel  = TIER_LABELS[tier]  || 'Free';
+  const tier      = userData?.tier || 'free';
+  const firstName = userData?.firstName || '';
+  const lastName  = userData?.lastName  || '';
+  const tierColor = TIER_COLORS[tier]  || TIER_COLORS.free;
+  const tierLabel = TIER_LABELS[tier]  || 'Free';
 
-  // Sync body class so .sb-content-wrap responds in CSS
   useEffect(() => {
-    if (collapsed) {
-      document.body.classList.add('sb-collapsed');
-    } else {
-      document.body.classList.remove('sb-collapsed');
-    }
+    document.body.classList.toggle('sb-collapsed', collapsed);
     localStorage.setItem('sb_collapsed', collapsed);
   }, [collapsed]);
 
-  // Clean up body class on unmount
-  useEffect(() => {
-    return () => document.body.classList.remove('sb-collapsed');
-  }, []);
+  useEffect(() => () => document.body.classList.remove('sb-collapsed'), []);
 
-  const handleNav = (path) => {
-    navigate(path);
-    setOpen(false);
-  };
+  const handleNav = (path) => { navigate(path); setOpen(false); };
 
-  const toggleCollapse = () => setCollapsed((prev) => !prev);
-
-  // Active check — /player and /player/:userId both highlight "My Stats"
   const isActive = (path) => {
     if (path === '/player') return location.pathname === '/player' || location.pathname.startsWith('/player/');
     return location.pathname === path;
@@ -90,38 +56,27 @@ const Sidebar = ({ userData, onSignOut }) => {
 
   return (
     <>
-      {/* Mobile top bar with hamburger */}
+      {/* Mobile top bar */}
       <div className="sb-mobile-bar">
-        <button className="sb-hamburger" onClick={() => setOpen(true)}>
-          <MenuIcon />
-        </button>
+        <button className="sb-hamburger" onClick={() => setOpen(true)}><MenuIcon /></button>
         <span className="sb-mobile-logo">ATLAS</span>
         <div className="sb-mobile-avatar" style={{ background: tierColor }}>
           {firstName ? firstName.charAt(0).toUpperCase() : '?'}
         </div>
       </div>
 
-      {/* Backdrop for mobile */}
-      {open && (
-        <div className="sb-backdrop" onClick={() => setOpen(false)} />
-      )}
+      {open && <div className="sb-backdrop" onClick={() => setOpen(false)} />}
 
-      {/* Sidebar panel */}
       <aside className={`sb-panel ${open ? 'sb-panel--open' : ''} ${collapsed ? 'sb-panel--collapsed' : ''}`}>
 
-        {/* Logo row */}
         <div className="sb-logo-row">
           {!collapsed && <span className="sb-logo">ATLAS</span>}
-          <button className="sb-close" onClick={() => setOpen(false)}>
-            <Close />
-          </button>
-          {/* Collapse toggle — desktop only */}
-          <button className="sb-collapse-btn" onClick={toggleCollapse} title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
+          <button className="sb-close" onClick={() => setOpen(false)}><Close /></button>
+          <button className="sb-collapse-btn" onClick={() => setCollapsed(p => !p)} title={collapsed ? 'Expand' : 'Collapse'}>
             {collapsed ? <ChevronRight /> : <ChevronLeft />}
           </button>
         </div>
 
-        {/* XP strip */}
         {!collapsed && (
           <button className="sb-xp-strip" onClick={() => handleNav('/experience')}>
             <WorkspacePremium className="sb-xp-strip__icon" />
@@ -132,18 +87,16 @@ const Sidebar = ({ userData, onSignOut }) => {
           </button>
         )}
         {collapsed && (
-          <button className="sb-xp-icon-btn" onClick={() => handleNav('/experience')} title={`${userData?.xp || 0} XP — View rewards`}>
+          <button className="sb-xp-icon-btn" onClick={() => handleNav('/experience')} title={`${userData?.xp || 0} XP`}>
             <WorkspacePremium />
           </button>
         )}
 
-        {/* Navigation */}
         <nav className="sb-nav">
-          {NAV_ITEMS.map((item) => {
+          {NAV_ITEMS.map(item => {
             const active = isActive(item.path);
             return (
-              <button
-                key={item.path}
+              <button key={item.path}
                 className={`sb-item ${active ? 'sb-item--active' : ''} ${item.soon ? 'sb-item--soon' : ''}`}
                 onClick={() => !item.soon && handleNav(item.path)}
                 title={item.soon ? `${item.label} — Coming soon` : item.label}
@@ -172,7 +125,6 @@ const Sidebar = ({ userData, onSignOut }) => {
           </button>
         </nav>
 
-        {/* Footer — user info + tier + signout */}
         <div className="sb-footer">
           <div className="sb-user" title={`${firstName} ${lastName} · ${tierLabel}`}>
             <div className="sb-user__avatar" style={{ background: tierColor }}>
@@ -180,9 +132,7 @@ const Sidebar = ({ userData, onSignOut }) => {
             </div>
             {!collapsed && (
               <div className="sb-user__info">
-                <span className="sb-user__name">
-                  {firstName} {lastName}
-                </span>
+                <span className="sb-user__name">{firstName} {lastName}</span>
                 <span className="sb-user__tier" style={{ color: tierColor }}>
                   <SportsBasketball style={{ fontSize: '0.65rem', marginRight: 3 }} />
                   {tierLabel}
@@ -190,7 +140,6 @@ const Sidebar = ({ userData, onSignOut }) => {
               </div>
             )}
           </div>
-
           <button className="sb-signout" onClick={onSignOut} title="Sign out">
             <LogoutOutlined />
             {!collapsed && <span>Sign out</span>}

@@ -764,3 +764,353 @@
   font-size: 0.7rem !important;
   color: rgba(255,255,255,0.35);
 }
+/* ── Paste at the bottom of StartScreen.css ────────────────────────────────── */
+
+/* ── Section link button ── */
+.sd-section__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: color 0.2s;
+  padding: 0;
+}
+.sd-section__link:hover { color: var(--white); }
+
+/* ── Leaderboard ── */
+.sd-leaderboard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sd-leader {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.8rem 1rem;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+.sd-leader:hover { background: #1c1c1c; }
+
+.sd-leader--first {
+  border-color: rgba(245,200,66,0.2);
+  background: rgba(245,200,66,0.04);
+}
+
+.sd-leader__rank {
+  font-size: 1rem;
+  min-width: 28px;
+  text-align: center;
+}
+
+.sd-leader__avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.sd-leader__name {
+  flex: 1;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--white);
+}
+
+.sd-leader__xp {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  color: var(--orange);
+}
+
+/* ── Carousel nav ── */
+.sd-carousel-nav {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.sd-carousel-btn {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-3);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.sd-carousel-btn:hover:not(:disabled) {
+  border-color: rgba(255,255,255,0.2);
+  background: #1c1c1c;
+}
+.sd-carousel-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* ── Carousel viewport ── */
+.sd-carousel-viewport {
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.sd-carousel-track {
+  display: flex;
+  gap: 12px;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Player card ── */
+.sd-player-card {
+  flex: 0 0 100%;
+  background: var(--bg-3);
+  border: 1px solid;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 220px;
+}
+
+@media (min-width: 540px) {
+  .sd-player-card {
+    flex: 0 0 calc(50% - 6px);
+  }
+  .sd-carousel-track {
+    /* Show 2 at once on tablets */
+  }
+}
+
+.sd-player-card--soon {
+  opacity: 0.75;
+}
+
+.sd-player-card__visual {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  min-height: 130px;
+}
+
+.sd-player-card__number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.sd-player-card__lock {
+  font-size: 2.5rem !important;
+  opacity: 0.6;
+}
+
+.sd-player-card__info {
+  padding: 1rem 1.1rem 1.1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.sd-player-card__tier {
+  display: inline-flex;
+  align-self: flex-start;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.sd-player-card__name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.sd-player-card__team {
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ── Carousel dots ── */
+.sd-carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.sd-carousel-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.15);
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+.sd-carousel-dot--active {
+  background: var(--orange);
+  width: 18px;
+  border-radius: 999px;
+}
+
+/* ── Plan loading ── */
+.sd-plan-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.sd-loading-spinner--small {
+  width: 18px; height: 18px;
+  border-width: 2px;
+}
+
+/* ── Subcategory blocks ── */
+.sd-subcategory-list { display: flex; flex-direction: column; gap: 1.25rem; }
+
+.sd-subcategory {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.sd-subcategory__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.sd-subcategory__title-row { display: flex; align-items: center; gap: 0.6rem; }
+.sd-subcategory__icon { font-size: 1.1rem !important; }
+.sd-subcategory__name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  color: var(--white);
+  margin: 0;
+}
+.sd-subcategory__count {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Exercise rows ── */
+.sd-exercise-list { display: flex; flex-direction: column; }
+
+.sd-exercise {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sd-exercise:last-child { border-bottom: none; }
+.sd-exercise:hover { background: rgba(255,255,255,0.03); }
+
+.sd-exercise--done { opacity: 0.6; }
+.sd-exercise--done .sd-exercise__title { text-decoration: line-through; color: var(--muted); }
+
+.sd-exercise__index {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  min-width: 28px;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.sd-exercise__body { flex: 1; display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; }
+.sd-exercise__title {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sd-exercise__meta { display: flex; align-items: center; gap: 0.5rem; }
+.sd-exercise__dur { font-size: 0.73rem; color: var(--muted); }
+
+.sd-workout__tier-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+.sd-exercise__play {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 32px; height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.sd-exercise__play:hover { border-color: var(--orange); color: var(--orange); background: rgba(255,90,31,0.08); }
+.sd-exercise__play--done { border-color: rgba(0,212,170,0.3) !important; background: rgba(0,212,170,0.06) !important; }
+.sd-exercise__play-icon { font-size: 1rem !important; }
+
+/* ── Empty plan ── */
+.sd-empty-plan {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 0.75rem;
+  padding: 3rem 1.5rem; text-align: center;
+  background: var(--bg-3); border: 1px solid var(--border); border-radius: 12px;
+}
+.sd-empty-plan__icon { font-size: 2rem !important; color: var(--muted); opacity: 0.5; }
+.sd-empty-plan__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem; letter-spacing: 0.05em; color: var(--white); margin: 0;
+}
+.sd-empty-plan__sub { font-size: 0.85rem; color: var(--muted); margin: 0; max-width: 280px; }
+.sd-cta-btn {
+  display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.5rem;
+  background: var(--orange); color: #fff; border: none; border-radius: 8px;
+  padding: 0.6rem 1.25rem; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: opacity 0.2s;
+}
+.sd-cta-btn:hover { opacity: 0.88; }

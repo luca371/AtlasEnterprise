@@ -1,0 +1,369 @@
+/* src/screens/TodayTrainingScreen.css */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+.tt-root {
+  --orange: #FF5A1F;
+  --teal:   #00D4AA;
+  --purple: #667eea;
+  --gold:   #f5c842;
+  --white:  #F5F0E8;
+  --muted:  #888;
+  --border: rgba(255,255,255,0.07);
+  --bg:     #0a0a0a;
+  --bg-2:   #111111;
+  --bg-3:   #161616;
+
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  min-height: 100vh;
+}
+
+/* ── Loading ── */
+.tt-loading {
+  min-height: 100vh;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+.tt-loading-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  letter-spacing: 0.15em;
+  color: #F5F0E8;
+  opacity: 0.4;
+}
+
+/* ── Background ── */
+.tt-bg {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 0;
+}
+.tt-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.06;
+}
+.tt-glow--1 { width: 600px; height: 600px; background: #FF5A1F; top: -200px; right: -200px; }
+.tt-glow--2 { width: 500px; height: 500px; background: #667eea; bottom: -200px; left: -200px; }
+.tt-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── Main ── */
+.tt-main {
+  position: relative; z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+@media (min-width: 768px) {
+  .tt-main { padding: 2.5rem 2rem 4rem; }
+}
+
+/* ── Header ── */
+.tt-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.tt-header__date {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+.tt-header__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 6vw, 3rem);
+  letter-spacing: 0.06em;
+  color: var(--white);
+  margin: 0;
+}
+.tt-header__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Progress ── */
+.tt-progress-wrap {
+  margin-bottom: 2rem;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+}
+.tt-progress-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+.tt-progress-label {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--white);
+}
+.tt-progress-pct {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+}
+.tt-progress-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.tt-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+/* ── Plan loading ── */
+.tt-plan-loading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 2rem 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* ── Spinner ── */
+.tt-spinner {
+  width: 32px; height: 32px;
+  border: 2px solid rgba(255,90,31,0.2);
+  border-top-color: #FF5A1F;
+  border-radius: 50%;
+  animation: ttSpin 0.7s linear infinite;
+}
+.tt-spinner--sm { width: 18px; height: 18px; }
+@keyframes ttSpin { to { transform: rotate(360deg); } }
+
+/* ── Subcategory list ── */
+.tt-subcategory-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ── Subcategory header ── */
+.tt-subcategory {}
+
+.tt-sub-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  gap: 0.75rem;
+}
+.tt-sub-header__left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.tt-sub-number {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+.tt-sub-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.06em;
+  color: var(--white);
+  margin: 0 0 0.1rem;
+}
+.tt-sub-count {
+  font-size: 0.73rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.tt-sub-done-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--teal);
+  background: rgba(0,212,170,0.1);
+  border: 1px solid rgba(0,212,170,0.25);
+  border-radius: 6px;
+  padding: 0.3rem 0.65rem;
+  white-space: nowrap;
+}
+
+/* ── Exercise grid ── */
+.tt-exercise-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 540px) {
+  .tt-exercise-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 900px) {
+  .tt-exercise-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── Exercise card ── */
+.tt-exercise-card {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.tt-exercise-card:hover {
+  background: #1c1c1c;
+  border-color: rgba(255,255,255,0.13);
+}
+.tt-exercise-card--done {
+  opacity: 0.55;
+}
+.tt-exercise-card--done .tt-exercise-card__title {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.tt-exercise-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tt-exercise-card__num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+}
+
+.tt-play-btn {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+.tt-play-btn:hover { opacity: 0.85; }
+.tt-play-btn--done {
+  background: rgba(0,212,170,0.1) !important;
+  border: 1px solid rgba(0,212,170,0.25);
+}
+
+.tt-exercise-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.tt-exercise-card__title {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--white);
+  line-height: 1.3;
+  margin: 0;
+}
+.tt-exercise-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.tt-exercise-card__dur {
+  font-size: 0.73rem;
+  color: var(--muted);
+}
+
+/* ── Tier badge ── */
+.tt-tier-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid;
+}
+
+/* ── Empty state ── */
+.tt-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding: 4rem 1.5rem;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.tt-empty__icon { font-size: 2rem !important; color: var(--muted); opacity: 0.5; }
+.tt-empty__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  margin: 0;
+}
+.tt-empty__sub { font-size: 0.85rem; color: var(--muted); margin: 0; max-width: 280px; }
+.tt-empty__btn {
+  margin-top: 0.5rem;
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: opacity 0.2s;
+}
+.tt-empty__btn:hover { opacity: 0.88; }
