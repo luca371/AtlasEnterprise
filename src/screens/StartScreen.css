@@ -782,6 +782,21 @@
 }
 .sd-section__link:hover { color: var(--white); }
 
+/* ── Leaderboard empty state ── */
+.sd-leaderboard-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2rem 1rem;
+  text-align: center;
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
 /* ── Leaderboard ── */
 .sd-leaderboard {
   display: flex;

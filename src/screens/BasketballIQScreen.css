@@ -321,3 +321,44 @@
   .iq-question-card__text { font-size: 1rem; }
   .iq-option { padding: 12px 14px; font-size: 0.88rem; }
 }
+/* ── Paste at the bottom of BasketballIQScreen.css ─────────────────────────────
+   Fix: Start Quiz button always directly below "Your XP" on all screen sizes
+   ─────────────────────────────────────────────────────────────────────────────── */
+
+/* Make intro a flex column so button always follows XP line */
+.iq-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Remove the huge gap between XP and button */
+.iq-intro__xp {
+  margin-bottom: 20px !important;
+}
+
+/* Button full width on mobile so it's always visible and tappable */
+.iq-btn-start {
+  width: 100%;
+  max-width: 340px;
+  justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .iq-btn-start {
+    width: 100%;
+    max-width: 100%;
+    padding: 16px 24px;
+  }
+
+  /* Compact rules on small screens so button stays in viewport */
+  .iq-intro__rules {
+    gap: 8px;
+  }
+  .iq-rule {
+    padding: 12px 14px;
+  }
+  .iq-rule__num {
+    font-size: 1.6rem;
+  }
+}

@@ -27,13 +27,86 @@ function getTodayKey() {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 
-const WEEKLY_LEADERS = [
-  { rank: 1, name: 'Jordan M.',  xp: 142, avatar: 'J', color: '#f5c842' },
-  { rank: 2, name: 'Andrei P.',  xp: 118, avatar: 'A', color: '#C0C0C0' },
-  { rank: 3, name: 'Marcus T.',  xp: 97,  avatar: 'M', color: '#cd7f32' },
-  { rank: 4, name: 'Luca B.',    xp: 84,  avatar: 'L', color: '#667eea' },
-  { rank: 5, name: 'Sasha K.',   xp: 71,  avatar: 'S', color: '#667eea' },
-];
+// ── WeeklyLeaderboard — real data from challenge_submissions ─────────────────
+const WeeklyLeaderboard = ({ navigate }) => {
+  const [leaders, setLeaders] = useState([]);
+  const [loadingL, setLoadingL] = useState(true);
+
+  useEffect(() => {
+    const fetchLeaders = async () => {
+      try {
+        const { getDocs, collection, query, orderBy } = await import('firebase/firestore');
+        const snap = await getDocs(query(collection(db, 'challenge_submissions'), orderBy('createdAt', 'desc')));
+        const all = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        // Sort by likes descending, take top 5
+        const sorted = all
+          .sort((a, b) => (b.likedBy?.length || 0) - (a.likedBy?.length || 0))
+          .slice(0, 5)
+          .map((s, i) => ({
+            rank:   i + 1,
+            name:   s.userName || 'Athlete',
+            likes:  s.likedBy?.length || 0,
+            avatar: (s.userName || 'A').charAt(0).toUpperCase(),
+          }));
+        setLeaders(sorted);
+      } catch (e) {
+        console.error('Leaderboard fetch error:', e);
+      } finally {
+        setLoadingL(false);
+      }
+    };
+    fetchLeaders();
+  }, []);
+
+  const RANK_COLORS = ['#f5c842', '#C0C0C0', '#cd7f32'];
+
+  return (
+    <section className="sd-section">
+      <div className="sd-section__header">
+        <div className="sd-section__title-wrap">
+          <MilitaryTech className="sd-section__icon" />
+          <h2 className="sd-section__title">WEEKLY CHALLENGE</h2>
+        </div>
+        <button className="sd-section__link" onClick={() => navigate('/challenge')}>
+          View all <ArrowForward style={{ fontSize: 14 }} />
+        </button>
+      </div>
+
+      {loadingL ? (
+        <div className="sd-plan-loading">
+          <div className="sd-loading-spinner sd-loading-spinner--small" />
+          <span>Loading leaderboard…</span>
+        </div>
+      ) : leaders.length === 0 ? (
+        <div className="sd-leaderboard-empty">
+          <EmojiEvents style={{ fontSize: '1.5rem', color: '#555' }} />
+          <span>No submissions yet — be the first to compete!</span>
+          <button className="sd-section__link" onClick={() => navigate('/challenge')}>
+            Join the challenge <ArrowForward style={{ fontSize: 13 }} />
+          </button>
+        </div>
+      ) : (
+        <div className="sd-leaderboard">
+          {leaders.map(p => {
+            const color = RANK_COLORS[p.rank - 1] || '#667eea';
+            return (
+              <div key={p.rank} className={`sd-leader ${p.rank === 1 ? 'sd-leader--first' : ''}`}>
+                <span className="sd-leader__rank">
+                  {p.rank === 1 ? '🥇' : p.rank === 2 ? '🥈' : p.rank === 3 ? '🥉' : `#${p.rank}`}
+                </span>
+                <div className="sd-leader__avatar" style={{ background: `${color}25`, color }}>
+                  {p.avatar}
+                </div>
+                <span className="sd-leader__name">{p.name}</span>
+                <span className="sd-leader__xp">{p.likes} ❤️</span>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </section>
+  );
+};
 
 const PLAYERS = [
   { id: 'duane', name: 'Duane Washington Jr.', team: 'Partizan Belgrade', position: 'Guard', tier: 'euroleague', number: '7',  comingSoon: false },
@@ -109,35 +182,6 @@ const EmptyPlan = ({ tier, navigate }) => (
       </>
     )}
   </div>
-);
-
-// ── WeeklyLeaderboard ─────────────────────────────────────────────────────────
-const WeeklyLeaderboard = ({ navigate }) => (
-  <section className="sd-section">
-    <div className="sd-section__header">
-      <div className="sd-section__title-wrap">
-        <MilitaryTech className="sd-section__icon" />
-        <h2 className="sd-section__title">WEEKLY CHALLENGE</h2>
-      </div>
-      <button className="sd-section__link" onClick={() => navigate('/challenge')}>
-        View all <ArrowForward style={{ fontSize: 14 }} />
-      </button>
-    </div>
-    <div className="sd-leaderboard">
-      {WEEKLY_LEADERS.map(p => (
-        <div key={p.rank} className={`sd-leader ${p.rank === 1 ? 'sd-leader--first' : ''}`}>
-          <span className="sd-leader__rank">
-            {p.rank === 1 ? '🥇' : p.rank === 2 ? '🥈' : p.rank === 3 ? '🥉' : `#${p.rank}`}
-          </span>
-          <div className="sd-leader__avatar" style={{ background: `${p.color}25`, color: p.color }}>
-            {p.avatar}
-          </div>
-          <span className="sd-leader__name">{p.name}</span>
-          <span className="sd-leader__xp">{p.xp} XP</span>
-        </div>
-      ))}
-    </div>
-  </section>
 );
 
 // ── PlayerCarousel ────────────────────────────────────────────────────────────
